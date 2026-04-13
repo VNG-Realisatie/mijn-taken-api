@@ -1,6 +1,6 @@
 | Eigenaar | Ingevuld door |
 | --- | --- |
-| Kennis Centrum Architectuur | Robert Melskens |
+| Project Omnichannel - MijnServices / Team Dienstverlening | Rutger ter Borg |
 <hr/>
 
 # Template-repository
