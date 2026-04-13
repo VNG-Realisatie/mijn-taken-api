@@ -1,0 +1,71 @@
+baseurl: "/xxxxxxx"
+apiname: "Xxxxx"
+url: "http://localhost:4000"
+# nav is t.b.v. generatie side-navigation menu.
+# Een 'title' zonder path of url genereert slechts een kopje.
+# 'path' vormt tezamen met de baseurl de url waarmee de 'href' wordt gevuld.
+# Indien een 'url' voorradig dan wordt daarmee de 'href' gevuld en dient het path slechts om te bepalen welke link active is.
+# 'target: blank' zorgt er voor dat de link in een nieuw tabblad wordt geöpend.
+nav:
+  - title: [Domein]
+    subnav:
+      - title: Introductie
+        path: /
+      - title: Productvisie
+        path: /productvisie
+      - title: Architectuur
+        path: /architectuur
+      - title: Informatiemodel
+        path: /informatiemodel
+      - title: Documentatie
+        path: /documentatie
+      - title: FAQ
+        path: /faq
+  - title: API-specificatie(s)
+    subnav:
+      - title: [Naam API-specificatie 1]
+        path: /[naam_api-specificatie_1]/
+      - title: [Naam API-specificatie 2]
+        path: /[naam_api-specificatie_2]/
+      - title: [Naam API-specificatie n]
+        path: /[naam_api-specificatie_n]/
+  - title: [Title 1]
+    subnav:
+      - title: [Subtitle 1]
+        path: /[title_1]/[subtitle_1]
+      - title: [Subtitle 2]
+        path: /[title_1]/[subtitle_2]
+      - title: [Subtitle n]
+        path: /[title_1]/[subtitle_n]
+  - title: [Title n]
+    subnav:
+      - title: [Subtitle 1]
+        path: /[title_n]/[subtitle_1]
+      - title: [Subtitle 2]
+        path: /[title_n]/[subtitle_2]
+      - title: [Subtitle n]
+        path: /[title_n]/[subtitle_n]
+  - title: Over
+    subnav:
+      - title: Ontwikkeling
+        path: /Over/ontwikkeling
+      - title: Contact
+        path: /Over/contact
+      - title: Omgangsvormen
+        path: /Over/CODE_OF_CONDUCT
+      - title: Licentie
+        path: /Over/LICENSE
+
+plugins:
+  - jekyll-redirect-from
+  - jekyll-remote-theme
+
+remote_theme: VNG-Realisatie/jekyll-theme-vng-realisatie
+
+github: VNG-Realisatie/Xxxxxx
+
+theme: jekyll-theme-time-machine
+
+project_name: /Open Raadsinformatie
+
+standard_family: VNG Realisatie
