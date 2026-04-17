@@ -61,7 +61,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'MijnTaken',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
