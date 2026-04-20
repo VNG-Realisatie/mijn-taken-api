@@ -11,7 +11,7 @@ const config: Config = {
   themes: ['@docusaurus/theme-mermaid'],
   title: 'MijnTaken API',
   tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/mijn-taken.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -68,7 +68,7 @@ const config: Config = {
       title: 'MijnTaken',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'img/mijn-taken.svg',
       },
       items: [
         {
