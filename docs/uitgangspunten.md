@@ -1,5 +1,9 @@
 # Uitgangspunten
 
+:::warning[In ontwikkeling]
+Dit document is nog in ontwikkeling en kan wijzigen.
+:::
+
 De MijnTaken API standaardiseert hoe portalen taken tonen en uitvoeren namens hun gebruikers. Het doel: een gebruiker kan een taak oppakken op elk aangesloten portaal, ongeacht welke organisatie de taak heeft uitgezet — vergelijkbaar met hoe je met je telefoon in het buitenland belt via een ander netwerk, zonder dat je iets hoeft in te stellen.
 
 ## Rollen
