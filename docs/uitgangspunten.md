@@ -10,11 +10,11 @@ De MijnTaken API standaardiseert hoe portalen taken tonen en uitvoeren namens hu
 
 De systemen die deelnemen aan het netwerk vervullen een van drie rollen:
 
-| Rol                      | Omschrijving                                                                                                                                                                    |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Consumer**             | Een portaal dat de API afneemt en taken toont aan eindgebruikers, zoals mijn.overheid.nl of een gemeentelijk portaal.                                                           |
-| **Bronprovider**         | Het systeem dat de taken beheert en de API aanbiedt.                                                                                                                            |
-| **Federatieve provider** | Een tussenprovider die de API aanbiedt aan consumers, maar de data ophaalt bij een of meerdere bronproviders. Gedraagt zich naar de consumer toe identiek aan een bronprovider. |
+| Rol                      | Omschrijving                                                                                                                                                                |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Consumer**             | Een portaal dat de API afneemt en taken toont aan eindgebruikers, zoals mijn.overheid.nl of een gemeentelijk portaal.                                                       |
+| **Bronprovider**         | Het systeem dat de taken beheert en de API aanbiedt.                                                                                                                        |
+| **Federatieve provider** | Een tussenprovider die de API aanbiedt aan consumers, maar de data ophaalt bij een of meer bronproviders. Gedraagt zich naar de consumer toe identiek aan een bronprovider. |
 
 Hoe een federatieve provider communiceert met bronproviders valt buiten de scope van dit contract. Hetzelfde geldt voor identificatie en authenticatie van eindgebruikers — die worden afgehandeld door een externe identity provider (zoals DigiD of eHerkenning).
 
@@ -25,8 +25,8 @@ block-beta
   space:3
   fp["Federatieve provider"] space bp["Bronprovider"]
 
-  cA-- "Contract" ---fp
-  cB-- "Contract" ---bp
+  cA-- "Contract (OpenAPI)" ---fp
+  cB-- "Contract (OpenAPI)" ---bp
   fp-. "buiten scope" .->bp
 ```
 
