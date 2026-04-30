@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Use cases
 
 Een **use case** beschrijft één samenhangende systeemfunctie vanuit het
@@ -18,6 +22,7 @@ Elke use case documenteert:
 
 ## Overzicht
 
-| ID      | Use case                                      |
-| :------ | :-------------------------------------------- |
-| `UC-01` | [Taak afhandelen](./uc-01-taak-afhandelen.md) |
+| ID      | Use case                                        |
+| :------ | :---------------------------------------------- |
+| `UC-01` | [Taken raadplegen](./uc-01-taken-raadplegen.md) |
+| `UC-02` | [Taak afhandelen](./uc-02-taak-afhandelen.md)   |

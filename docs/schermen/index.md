@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Schermen
 
 Elk scherm krijgt een eigen pagina met:
@@ -12,11 +16,10 @@ worden door use cases aangehaald.
 
 ## Overzicht
 
-| ID                | Scherm                            |
-| :---------------- | :-------------------------------- |
-| `SCR-TAAK-LIJST`  | [Takenoverzicht](./taak-lijst.md) |
-| `SCR-TAAK-DETAIL` | [Taakdetail](./taak-detail.md)    |
-| `SCR-TAAK-NIEUW`  | [Nieuwe taak](./taak-nieuw.md)    |
+| ID                    | Scherm                                  |
+| :-------------------- | :-------------------------------------- |
+| `SCR-TAAK-LIJST`      | [Takenoverzicht](./taken-overzicht.md)  |
+| `SCR-TAAK-IN-CONTEXT` | [Taak in context](./taak-in-context.md) |
 
 ## Portalen
 
