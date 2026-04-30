@@ -12,7 +12,7 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
-          id: "query-taken",
+          id: "zoek-taken",
           label: "Haal een lijst van taken op",
           className: "api-method post",
         },

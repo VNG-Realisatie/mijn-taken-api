@@ -4,7 +4,7 @@ sidebar_position: 2
 
 import AnnotatedPreview from '@site/src/components/AnnotatedPreview';
 
-# [SCR-TAAK-LIJST] Takenoverzicht
+# [SCR-TAAK-LIJST] Mijn taken
 
 Overzicht van de aan de klant (burger of ondernemer) toegewezen taken, met
 filter- en sorteermogelijkheden.
@@ -16,6 +16,7 @@ src="https://nl-design-system.github.io/mijn-services/iframe.html?id=mijn-omgevi
 height={700}
 title="Takenoverzicht schermvoorbeeld (MijnOmgeving)"
 annotations={[
+{ id: 'L.1', x: '10%', y: '10%', label: 'Mijn taken (paginatitel)' },
 { id: 'L.2', x: '68%', y: '42%', label: 'Klik op taak (→ Taakdetail)' },
 ]}
 />
@@ -24,12 +25,11 @@ annotations={[
 
 ## Interacties
 
-| ID      | Element             | Interactie      | Bedoeling / resultaat                         | API                           |
-| :------ | :------------------ | :-------------- | :-------------------------------------------- | :---------------------------- |
-| **L.1** | Filter _Status_     | Keuze wijzigt   | Lijst toont alleen taken met gekozen status   | `GET /taken?status={val}`     |
-| **L.2** | Kolom _Titel_       | Klik op rij     | Opent taak in context (`SCR-TAAK-IN-CONTEXT`) | `GET /taken/{taakId}`         |
-| **L.3** | Kolom _Vervaldatum_ | Sorteren        | Lijst wordt gesorteerd op vervaldatum         | `GET /taken?sort=vervaldatum` |
-| **L.4** | Paginering          | Volgende pagina | Volgende set resultaten laden                 | `GET /taken?page={n}`         |
+| ID      | Element             | Interactie   | Bedoeling / resultaat                         | API                                                                 |
+| :------ | :------------------ | :----------- | :-------------------------------------------- | :------------------------------------------------------------------ |
+| **L.1** | Paginatitel         | Pagina laden | Lijst van taken voor de ingelogde klant       | [`POST /taken/zoek`](/api/zoek-taken) (`klantId`, geen `contextId`) |
+| **L.2** | Kolom _Titel_       | Klik op rij  | Opent taak in context (`SCR-TAAK-IN-CONTEXT`) | —                                                                   |
+| **L.3** | Kolom _Vervaldatum_ | Sorteren     | Lijst wordt gesorteerd op vervaldatum         | —                                                                   |
 
 ## Gebruikt in use cases
 

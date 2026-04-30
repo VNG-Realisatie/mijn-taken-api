@@ -22,11 +22,21 @@ tags:
 paths:
   /taken/zoek:
     post:
-      operationId: queryTaken
+      operationId: zoekTaken
       summary: Haal een lijst van taken op
       description: |
         Geeft een lijst van taken terug die voldoen aan de opgegeven filters.
         `klantId` is verplicht; `contextId` is optioneel.
+
+        **Ontwerpkeuze — POST als query:**
+        Deze operatie gebruikt `POST` omdat de filtercriteria in de request body
+        worden meegegeven. Qua semantiek gedraagt de operatie zich als de
+        [HTTP QUERY method (IETF-draft)](https://www.ietf.org/archive/id/draft-ietf-httpbis-safe-method-w-body-05.txt):
+        zij is **safe** (geen neveneffecten) en **idempotent** (herhaalde aanroep
+        met dezelfde body geeft hetzelfde resultaat). Consumers mogen de aanroep
+        dan ook als zodanig behandelen — cachen, herhalen bij netwerkstoringen, etc.
+        Zodra HTTP QUERY breed ondersteund wordt door clients en gateways, kan
+        dit endpoint zonder gedragswijziging worden gemigreerd.
       tags:
         - Taken
       requestBody:
