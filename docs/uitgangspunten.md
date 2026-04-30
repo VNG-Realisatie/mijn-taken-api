@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Uitgangspunten
 
 :::warning[In ontwikkeling]
@@ -49,10 +53,6 @@ Dit volgt het [Robustness principle](https://en.wikipedia.org/wiki/Robustness_pr
 
 Een taak wordt altijd uitgevoerd bij de bronprovider — al dan niet via een federatieve provider als doorgeefluik. Consumers tonen de taak, maar slaan geen uitvoeringsdata op. Dit borgt dataminimalisatie: uitvoeringsdata verlaat de bronprovider niet structureel.
 
-### 4. Geen API-typologie
-
-Een API is een verbinding tussen twee systemen. Typeringen als "Proces API" of "Experience API" kennen eigenschappen toe aan de verbinding, terwijl de eigenschappen bij de systemen horen. Het uniform contract (principe 1) zegt dat we uitgaan van één set eisen aan de systemen. De beste omschrijving hier is de MijnTaken API.
-
 ## Uitwerking
 
 ### Additief model en groeipad
@@ -81,3 +81,9 @@ Afhankelijk van welke data de provider meelevert, kan een consumer de taak op vi
 :::note
 Scenario 4 stelt ook eisen aan de bronconsumer: als een gebruiker via externe referral bij een ander portaal terechtkomt, moet dat portaal de taak zelf volledig kunnen afhandelen — anders belandt de gebruiker in een doodlopende weg.
 :::
+
+#### Transiente statusfeedback na redirect
+
+Bij scenario's waarbij de gebruiker tijdelijk het portaal verlaat (externe referral, betaling), kan de bronprovider bij de terugkeer een statusparameter meegeven in de return-URL — bijvoorbeeld `?status=betaald`. De consumer mag deze parameter gebruiken voor **directe UX-feedback** (zoals een succesmelding) zonder te wachten op een API-poll.
+
+Dit is geen schending van principe 3 (_uitvoering bij de bron_): de consumer slaat de statuswaarde niet op en gebruikt hem uitsluitend voor transiente weergave. De werkelijke statuswissel blijft eigendom van de bronprovider. De consumer herlaadt vervolgens de taak via de API om de actuele toestand te tonen.

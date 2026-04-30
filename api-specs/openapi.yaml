@@ -1,0 +1,137 @@
+openapi: 3.1.0
+info:
+  title: MijnTaken API
+  description: |
+    De **MijnTaken API** stelt applicaties in staat om taken op te halen voor burgers en ondernemers.
+  version: 0.1.0
+  contact:
+    name: VNG Realisatie
+    url: https://github.com/vng-realisatie/mijn-taken-api
+  license:
+    name: EUPL 1.2
+    url: https://opensource.org/licenses/EUPL-1.2
+
+servers:
+  - url: https://api.example.nl/taken/v1
+    description: Productie
+
+tags:
+  - name: Taken
+    description: Raadpleeg taken
+
+paths:
+  /taken/zoek:
+    post:
+      operationId: queryTaken
+      summary: Haal een lijst van taken op
+      description: |
+        Geeft een lijst van taken terug die voldoen aan de opgegeven filters.
+        Minimaal één van `gebruikerId`, `bsn` of `contextId` moet opgegeven zijn.
+      tags:
+        - Taken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaakQuery"
+      responses:
+        "200":
+          description: Succesvol
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Taak"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+components:
+  schemas:
+    TaakQuery:
+      type: object
+      description: Filtercriteria voor het opvragen van taken.
+      properties:
+        gebruikerId:
+          type: string
+          description: Interne gebruikersidentificatie (bijv. sub-claim uit het ID-token).
+          example: "a8f3c1d2-7e44-4b1a-9c0f-123456789abc"
+        bsn:
+          type: string
+          description: Burgerservicenummer van de klant.
+          example: "999990019"
+        contextId:
+          type: string
+          description: Identifier van de context (bijv. zaak, product of dossier) waarbinnen de taken worden gezocht.
+          example: "zaak-2026-00042"
+
+    Taak:
+      type: object
+      required:
+        - uuid
+        - titel
+        - status
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+          example: 550e8400-e29b-41d4-a716-446655440000
+        titel:
+          type: string
+          example: Paspoort verlengen
+        omschrijving:
+          type: string
+          example: Uw paspoort verloopt binnenkort. Verleng deze op tijd.
+        status:
+          type: string
+          enum:
+            - open
+            - afgerond
+            - geannuleerd
+          example: open
+        vervaldatum:
+          type: string
+          format: date
+          example: "2026-12-31"
+
+    Fout:
+      type: object
+      required:
+        - code
+        - titel
+      properties:
+        code:
+          type: string
+          example: invalid
+        titel:
+          type: string
+          example: Ongeldige invoer
+        detail:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Ongeldige aanvraag
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fout"
+    Unauthorized:
+      description: Authenticatie vereist
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Fout"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

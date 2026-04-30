@@ -1,6 +1,8 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type * as Plugin from '@docusaurus/types/src/plugin';
+import type * as OpenApiPlugin from 'docusaurus-plugin-openapi-docs';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -8,7 +10,7 @@ const config: Config = {
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: ['@docusaurus/theme-mermaid', 'docusaurus-theme-openapi-docs'],
   title: 'MijnTaken API',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/mijn-taken.svg',
@@ -58,6 +60,35 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'api',
+        path: 'api-docs',
+        routeBasePath: 'api',
+        sidebarPath: './api-sidebars.ts',
+        docItemComponent: '@theme/ApiItem',
+      },
+    ],
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: 'openapi',
+        docsPluginId: 'api',
+        config: {
+          'mijn-taken': {
+            specPath: 'api-specs/openapi.yaml',
+            outputDir: 'api-docs',
+            sidebarOptions: {
+              groupPathsBy: 'tag',
+            },
+          } satisfies OpenApiPlugin.Options,
+        },
+      } satisfies Plugin.PluginOptions,
+    ],
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -73,9 +104,16 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'docsSidebar',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'apiSidebar',
+          docsPluginId: 'api',
+          position: 'left',
+          label: 'API',
         },
         {
           href: 'https://github.com/vng-realisatie/mijn-taken-api',

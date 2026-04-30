@@ -1,0 +1,69 @@
+---
+id: query-taken
+title: "Haal een lijst van taken op"
+description: "Geeft een lijst van taken terug die voldoen aan de opgegeven filters."
+sidebar_label: "Haal een lijst van taken op"
+hide_title: true
+hide_table_of_contents: true
+api: eJzlVtty2zYQ/RXMPjUeUqIU2Yn5ljSXutPUbuKkD45nvCRWFCQSYACQjq3RB+U78mOdBSlLtjRu2qfOlC+iiL0enL0swdRk0SujTySk8KUhe3OOC9IQgSSXW1XzIaTwlmjqBZEWpZo7L1rUwrOk8GSbQkhFojWlNKQFohaShKkLKqglLaaq9GTd4LN+p7SqEEvx/dv3bzpYuSoos41akD2RV5G4ypy+EmYqrnKjPX31J/JKVIb8lr1bNdeDzxykx8JBegFd0JcRWPrSkPMvjbyBdBn+KksSUm8biiDY1J6PsK5LlYfkh3PHSS7B5TOqkN/8TU2QgsnmlPsdNN6EhHKrPFmFojXGilkIsbVYkN7AM4AIasswe0WOLW+lu+XIeat0sePoRHuymsSdklOStFfTEDmJnzI1bwfCNVmcl6gq0SgfIjl5FXuzIP2EA6CvWNUlu8Hn06f5SI7jZzSZxJNshPFxnkzj0fjp5PDo2fNjzHJYRZA5/ffBvWxsQdaRbVVOuqkqsiFxSWJRovb3XR/zkySjY7Z/d7c/AEGf8MZ4r7xO/hZxEYnaGtnknpkjjXOK7BNxjWgzpTUFtY6u18ZK0qKgW5PPHoTIluJxMj6KkySZjGG1isArH87OERd/cH3AasXfLbnaaNfd6ThJ+Od+4B+aPCfXmhL+Oe/QWryBCJSnyu3j44bYF9A0SkKIlNiX8+gbx8Vwn3hBbA/cU2Mr9JCu7VhCearLm3XNbPA5PEzo+SRJYhofZ/FkJCcxPhsdxZPJ0dHh4WSSJEkCq3Uke1xtTJ2hq42xXrRkS9IFaVY0lctnVs1bFn9U/+O1qLdNGFN70d31wlg/EJ86u0LSLbci4dVcDthHD88+67qpGE9ThwaI04Ks0QxJQah1UxJZybhuwgiiqwhasi2WEj1beARiiZ7u5RHYNhrHT0c7bAtEW0Uw2UeuU11QKVVB3G1bi1j8C5btZVNuJN2xaYdE4fTRm1G6xVLJH+TBJg+lW0OW1SR5VHv0tgF6YxoPa3xGu/i8aPyM+0bXJluypJz/n0K0iqAiPzM84msTYKjRzyCFYeiJw1tDC24cZFuyPE+X0NgSUph5X7t0OMRaDfqABrrstdrRTq8+65qwIlhdsr28scrfBIMZoSXL1wLpxeX28QfGvINuW+guNQ6CowtikPZCEPUvb9a19euf5yF/vsv3mzXg9RrIB6P3x2ZhPwq3pte94bU7MiJQempC+P09vFNzHfYT8eLsZAeyVyQODu6JHBwI56n04o6g5ITSwnlEL0zVDzLuaSRmWPK6wQtI1o1jwWda8tpQdUsXhP7kOn/JYDRI+iQwD4WgMeD66fe34j1hqRy7hOgBBwrlZ002yE01bHUR2zvJYaXmOg5BxVgrhqDkhcDRlvHXH89+E6PBeMcsd1BnGpvTwNhi2Gu6ISvErMBXyqytUG/Z+4WXyH3rqKkfQrzcFP1/do3tmM5yw7pEFWZKwGnZl+oF+H4vD8V6GcGMKzm9gOUyQ0cfbbla8eeww3OJRdCiVZgxBy8uVxHMCCXZUIwLuoEUfu5gic/ZO4uXTdg9HvbFVbTWeJHnVPtHZS+3ms3Z6YdzrqB+Ga9CYwSL19xP8RpSgAhMuKZQ/uHbEkrURYMFy3Y2+fkL2YlSyw==
+sidebar_class_name: "post api-method"
+info_path: api//mijntaken-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+import Translate from "@docusaurus/Translate";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Haal een lijst van taken op"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/taken/zoek"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Geeft een lijst van taken terug die voldoen aan de opgegeven filters.
+Minimaal één van `gebruikerId`, `bsn` of `contextId` moet opgegeven zijn.
+
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+>
+  <Translate id="theme.openapi.request.title">Request</Translate>
+</Heading>
+
+<ParamsDetails>
+  
+</ParamsDetails>
+
+<RequestSchema
+  {...require("./query-taken.RequestSchema.json")}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  {...require("./query-taken.StatusCodes.json")}
+>
+  
+</StatusCodes>
+
+
+      
