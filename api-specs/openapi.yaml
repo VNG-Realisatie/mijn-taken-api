@@ -26,7 +26,7 @@ paths:
       summary: Haal een lijst van taken op
       description: |
         Geeft een lijst van taken terug die voldoen aan de opgegeven filters.
-        Minimaal één van `gebruikerId`, `bsn` of `contextId` moet opgegeven zijn.
+        `klantId` is verplicht; `contextId` is optioneel.
       tags:
         - Taken
       requestBody:
@@ -54,15 +54,13 @@ components:
     TaakQuery:
       type: object
       description: Filtercriteria voor het opvragen van taken.
+      required:
+        - klantId
       properties:
-        gebruikerId:
+        klantId:
           type: string
-          description: Interne gebruikersidentificatie (bijv. sub-claim uit het ID-token).
+          description: Identifier van de klant (bijv. sub-claim uit het ID-token).
           example: "a8f3c1d2-7e44-4b1a-9c0f-123456789abc"
-        bsn:
-          type: string
-          description: Burgerservicenummer van de klant.
-          example: "999990019"
         contextId:
           type: string
           description: Identifier van de context (bijv. zaak, product of dossier) waarbinnen de taken worden gezocht.
