@@ -31,6 +31,43 @@ import Export from "@theme/ApiExplorer/Export";
 
 De **MijnTaken API** stelt applicaties in staat om taken op te halen voor burgers en ondernemers.
 
+## Additief model
+
+Het `Taak`-object is opgebouwd als een additief model, zodat portalen progressive
+enhancement en graceful degradation kunnen toepassen.
+
+**De API is agnostisch voor de capabilities van de client.** De response is
+altijd identiek, ongeacht welk portaal de aanroep doet. Het is aan het portaal
+om te bepalen wat het met de aangeboden informatie doet:
+
+| `type` herkend | `definitie` aanwezig | Actie                                                             |
+| :------------- | :-------------------------- | :---------------------------------------------------------------- |
+| nee            | n.v.t.                      | `canonicalUrl` → directe link; label: „Uitvoeren”               |
+| ja             | nee                         | Type-specifieke CTA-knop; klik → `canonicalUrl`                  |
+| ja             | ja                          | Lokale uitvoering renderen; submit → `definitie.endpoint` |
+
+**Context:** de context waaraan een taak gekoppeld is (bijv. een zaak)
+wordt aangeduid met een portaal-agnostische URN en optioneel een
+`canonicalUrl` aangeleverd door de dienstverlener. `canonicalUrl` is
+afwezig als de dienstverlener geen eigen portaal heeft (bijv. gemeenten die
+volledig via MijnOverheid werken). Portalen met eigen contextondersteuning
+kunnen de URN gebruiken om een interne URL op te bouwen.
+
+`uitvoering.canonicalUrl` is de **canonieke verwijzing** naar de uitvoering —
+altijd aanwezig, altijd bruikbaar als fallback als het portaal niet lokaal
+kan renderen.
+
+`uitvoering.type` geeft het **type van de definitie** aan, afkomstig
+uit de taakdefinitie. Het portaal leidt hier het CTA-label uit af
+(bijv. `betaling` → „Betalen”, `upload` → „Document uploaden”).
+Onbekend of afwezig type → generiek label „Uitvoeren” + `canonicalUrl`.
+
+`uitvoering.definitie` bevat de declaratieve definitie voor lokale
+uitvoering (bijv. uploadconfiguratie of formulierdefinitie). Alleen aanwezig
+in de detailrespons (`GET /taken/{uuid}`). Betaling heeft geen
+`definitie` — betaaltaken leiden altijd tot een redirect via
+`canonicalUrl`.
+
 
 <div
   style={{"marginBottom":"2rem"}}

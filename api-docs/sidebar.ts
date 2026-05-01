@@ -16,6 +16,12 @@ const sidebar: SidebarsConfig = {
           label: "Haal een lijst van taken op",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "retrieve-taak",
+          label: "Haal één taak op",
+          className: "api-method get",
+        },
       ],
     },
   ],

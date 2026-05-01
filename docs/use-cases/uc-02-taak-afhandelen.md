@@ -15,16 +15,16 @@ sidebar_position: 3
 
 ## A1 — Hoofdflow
 
-1. Klant opent [`SCR-TAAK-LIJST`](../schermen/taken-overzicht.md) en ziet de eigen taken.
-2. Klant filtert optioneel op status — interactie [L.1](../schermen/taken-overzicht.md#interacties).
-3. Klant klikt een rij aan — interactie [L.2](../schermen/taken-overzicht.md#interacties) — en komt op [`SCR-TAAK-IN-CONTEXT`](../schermen/taak-in-context.md).
+1. Klant opent [`SCR-MIJN-TAKEN`](../schermen/mijn-taken.md) en ziet de eigen taken.
+2. Klant filtert optioneel op status — interactie [L.1](../schermen/mijn-taken.md#interacties).
+3. Klant klikt een rij aan — interactie [L.2](../schermen/mijn-taken.md#interacties) — en komt op [`SCR-TAKEN-IN-CONTEXT`](../schermen/taken-in-context.md).
 4. Klant leest de toelichting en eventuele bijlagen.
-5. Klant klikt op _Afronden_ — interactie [C.5](../schermen/taak-in-context.md#interacties--detailpaneel) — en bevestigt de actie.
-6. Systeem markeert de taak als `afgerond` en navigeert terug naar `SCR-TAAK-LIJST`.
+5. Klant klikt op _Afronden_ — interactie [C.5](../schermen/taken-in-context.md#interacties--detailpaneel) — en bevestigt de actie.
+6. Systeem markeert de taak als `afgerond` en navigeert terug naar `SCR-MIJN-TAKEN`.
 
 ## Alternatieve flows
 
-- **A2 — Taak is al afgerond:** de knop _Afronden_ ([C.5](../schermen/taak-in-context.md#interacties--detailpaneel)) is niet zichtbaar; klant kan alleen raadplegen.
+- **A2 — Taak is al afgerond:** de knop _Afronden_ ([C.5](../schermen/taken-in-context.md#interacties--detailpaneel)) is niet zichtbaar; klant kan alleen raadplegen.
 - **A3 — Conflict bij afronden:** de API geeft `409` (bv. status inmiddels gewijzigd door backend). UI toont een melding en herlaadt de taak.
 - **A4 — Taak vereist betaling:** in plaats van _Afronden_ wordt de klant via een redirect doorgestuurd naar het portaal van de lokale overheid, dat een betaalprovider aanroept. Na geslaagde betaling werkt het portaal de taakstatus bij via `PATCH /taken/{taakId}` en redirect de klant terug naar MijnOverheid/MijnOmgeving met een statusmelding.
 
@@ -47,7 +47,40 @@ sidebar_position: 3
       MO-->>-Gebruiker: Toon status
   ```
 
+- **A5 — Upload-taak:** de taak vereist dat de klant één of meer documenten aanlevert. De klant uploadt de bestanden via het portaal, waarna de dienstverlener ze koppelt aan de zaak en de taak als voltooid markeert.
+
+  :::note[Perspectief: MijnOverheid]
+  Dit diagram toont de flow zoals die verloopt via het MijnOverheid portaal. Lokale portalen (MijnOmgeving) kennen een vergelijkbare flow, maar communiceren rechtstreeks met de MijnTaken API van de dienstverlener zonder tussenkomst van de MijnOverheid Takenlijst.
+  :::
+
+  ```mermaid
+  sequenceDiagram
+      actor DA as Dienstafnemer
+      participant MOFO as MijnOverheid Portaal
+      participant MOTL as MijnOverheid Takenlijst
+      participant TAPI as MijnTaken API
+      participant ZS as Dienstverlener Zaaksysteem
+
+      ZS->>MOTL: Cloudevent: Taak toegewezen
+      DA->>MOFO: Login middels DigiD
+      MOFO->>MOTL: Vraag open taken op
+      MOTL-->>MOFO: Open taken
+      MOFO->>DA: Toont open taken in "Recent" overzicht op landing page
+      DA->>MOFO: Klikt op upload-taak
+      MOFO->>TAPI: Vraag taak-details op
+      TAPI-->>MOFO: Taak-details
+      MOFO->>DA: Toont taak-details
+      DA->>MOFO: Voegt document(en) toe
+      DA->>MOFO: Klikt op "Verzenden"
+      MOFO->>TAPI: Upload document(en)
+      TAPI->>ZS: Koppel document(en) aan taak
+      ZS-->>TAPI: Success response
+      TAPI-->>MOFO: Success response
+      MOFO->>DA: Toont bevestiging taak voltooid
+      ZS->>MOTL: Cloudevent: Taak voltooid
+  ```
+
 ## Resultaat
 
 De taak heeft status `afgerond` en verdwijnt uit het standaardfilter _Open_ op
-[`SCR-TAAK-LIJST`](../schermen/taken-overzicht.md).
+[`SCR-MIJN-TAKEN`](../schermen/mijn-taken.md).

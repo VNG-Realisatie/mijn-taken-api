@@ -10,20 +10,20 @@ Elk scherm krijgt een eigen pagina met:
 - De **interactietabel**: per UI-element een ID, de interactie en de bijbehorende API-aanroep
 - Welke [use cases](../use-cases/index.md) het scherm gebruiken
 
-Schermen worden geïdentificeerd met het patroon `SCR-<ONDERWERP>-<VARIANT>`,
-elementen met `SCR-<ONDERWERP>-<VARIANT>.<element>`. Deze IDs zijn stabiel en
-worden door use cases aangehaald.
+Schermen worden geïdentificeerd met het patroon `SCR-<ONDERWERP>`. IDs zijn stabiel en worden door use cases aangehaald.
 
 ## Overzicht
 
-| ID                    | Scherm                                  |
-| :-------------------- | :-------------------------------------- |
-| `SCR-TAAK-LIJST`      | [Takenoverzicht](./taken-overzicht.md)  |
-| `SCR-TAAK-IN-CONTEXT` | [Taak in context](./taak-in-context.md) |
+| ID                     | Scherm                                                                      |
+| :--------------------- | :-------------------------------------------------------------------------- |
+| `SCR-RECENT`           | [Recent](./recent.md)                                                       |
+| `SCR-MIJN-TAKEN`       | [Mijn taken](./mijn-taken.md)                                               |
+| `SCR-TAKEN-IN-CONTEXT` | [Taken in context](./taken-in-context.md)                                   |
+| `SCR-TAAK-UITVOEREN`   | [Taak uitvoeren](./taak-uitvoeren.md)                                       |
+| `SCR-DIGID-EH`         | [DigiD eenvoudige herauthenticatie](./digid-eenvoudige-herauthenticatie.md) |
 
-## Portalen
+Zie ook het [procesoverzicht](../procesoverzicht.md) voor de BPMN en de volledige schermflow.
 
-De MijnTaken-schermen worden in twee portalen getoond: **MijnOverheid** (MO)
-en **MijnOmgeving** (MG, decentrale overheid). Verschillen per portaal worden
-per scherm onderaan de pagina gedocumenteerd; als een scherm identiek is voor
-beide portalen hoeft daar niets te staan.
+## Huidige situatie
+
+De API is opgezet als API-first: elk portaal kan de API aanroepen. Op dit moment is [`SCR-RECENT`](./recent.md) alleen uitgewerkt voor MijnOverheid, en valt [`SCR-MIJN-TAKEN`](./mijn-taken.md) onder de Lokale Omgeving. In beide gevallen is de API-aanroep gedocumenteerd, zodat ook een Lokale Omgeving in de toekomst een eigen recent-scherm kan bouwen.

@@ -2,9 +2,9 @@
 sidebar_position: 7
 ---
 
-# Context
+# Gerelateerd
 
-Verwante initiatieven, standaarden en achtergrondlectuur.
+Verwante initiatieven, standaarden en achtergrondinformatie.
 
 ## Gerelateerde standaarden en initiatieven
 

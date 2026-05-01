@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 import BpmnViewer from '@site/src/components/BpmnViewer';
@@ -16,7 +16,7 @@ Dit diagram toont alleen de hoofdflow. Exception flows (zoals een mislukte betal
 
 ## Schermflow
 
-Het onderstaande diagram toont de navigatieflow langs de [schermen](./schermen/index.md) per startpunt en taaktype.
+Het onderstaande diagram toont de navigatieflow langs de [schermen](./schermen/index.md) per startpunt en taaktype. **Blauw** is het beoogde pad voor MijnOverheid, **groen** voor MijnOmgeving. De betaalprovider (grijs) is extern en bereikbaar vanuit beide portalen.
 
 ```mermaid
 flowchart TD
@@ -43,7 +43,9 @@ flowchart TD
     %% Portaal B
     MIJN_TAKEN --> TIC_B
     TIC_B --> UITVOEREN_B
+    TIC_B -->|"betaling"| BETALING
     UITVOEREN_B -.->|"terug"| TIC_B
+    BETALING -.->|"terug"| TIC_B
 
     %% Portaalwissels
     RECENT -->|"geen zaakcontext\n→ SCR-DIGID-EH"| TIC_B
