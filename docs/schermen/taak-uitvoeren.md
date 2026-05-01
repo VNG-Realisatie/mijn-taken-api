@@ -39,7 +39,7 @@ _Mockup nog toe te voegen._
 | **U.4** | Terug-navigatie     | Klik                   | Navigeert terug naar [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)                   | —                                                                         |
 
 :::note[Taaktype-afhankelijk]
-Niet alle interacties zijn bij elke taak aanwezig. U.2 en U.3 gelden voor uploadtaken. Formulieren (toekomst) volgen een vergelijkbaar patroon.
+Niet alle interacties zijn bij elke taak aanwezig. U.2 en U.3 gelden voor uploadtaken. Formulieren (nog uit te werken) volgen een vergelijkbaar patroon.
 :::
 
 ## Gebruikt in use cases
