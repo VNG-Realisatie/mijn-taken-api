@@ -9,7 +9,7 @@ Dedicated uitvoerscherm voor één specifieke taak. De klant landt hier via een 
 Het scherm is taaktype-afhankelijk:
 
 - **Bestandsupload** — klant voegt één of meer documenten toe en dient ze in. Bestandsupload is een smal geval van een formulier.
-- **Formulier** _(toekomst)_ — klant vult een dynamisch formulier in.
+- **Formulier** _(uit te werken)_ — klant vult een dynamisch formulier in.
 
 :::note[Betaling]
 Een betaaltaak leidt altijd direct tot een redirect naar de betaalprovider, zonder tussenkomst van dit scherm. Betalen is altijd uitvoerbaar vanuit elk portaal en vereist geen portaalwissel. De knop _Betalen_ staat op [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md) (interactie C.9).
@@ -17,11 +17,11 @@ Een betaaltaak leidt altijd direct tot een redirect naar de betaalprovider, zond
 
 ## Instappaden
 
-| Vanaf                                                    | Portaal | Hoe                                                                                                                 |
-| :------------------------------------------------------- | :------ | :------------------------------------------------------------------------------------------------------------------ |
-| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)          | LO      | Knop _Uitvoeren_ (interactie C.8) — direct, geen portaalwissel                                                      |
-| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)          | MO      | Knop _Uitvoeren_ (C.8) — uitsluitend voor taken uitvoerbaar in MO (upload; later formulieren); binnen MijnOverheid  |
-| [`SCR-DIGID-EH`](./digid-eenvoudige-herauthenticatie.md) | LO      | Na succesvolle herauthenticatie (portaalwissel vanuit MO); deeplink opent direct de specifieke taak voor uitvoering |
+| Vanaf                                                    | Portaal | Hoe                                                                                                                            |
+| :------------------------------------------------------- | :------ | :----------------------------------------------------------------------------------------------------------------------------- |
+| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)          | LO      | Knop _Uitvoeren_ (interactie C.8) — direct, geen portaalwissel                                                                 |
+| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)          | MO      | Knop _Uitvoeren_ (C.8) — uitsluitend voor taken uitvoerbaar in MO (upload; formulieren nog uit te werken); binnen MijnOverheid |
+| [`SCR-DIGID-EH`](./digid-eenvoudige-herauthenticatie.md) | LO      | Na succesvolle herauthenticatie (portaalwissel vanuit MO); deeplink opent direct de specifieke taak voor uitvoering            |
 
 ## Schermvoorbeeld
 
@@ -49,4 +49,4 @@ Niet alle interacties zijn bij elke taak aanwezig. U.2 en U.3 gelden voor upload
 ## Verschillen per portaal
 
 - **MijnOmgeving (LO):** alle taaktypen worden hier uitgevoerd.
-- **MijnOverheid (MO):** alleen taken die MijnOverheid zelf kan uitvoeren verschijnen hier (upload; later formulieren). Betalingstaken worden nooit via dit scherm afgehandeld — die starten een directe redirect vanuit [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md). Taken die MO niet zelf kan uitvoeren worden via [`SCR-DIGID-EH`](./digid-eenvoudige-herauthenticatie.md) doorgestuurd naar dit scherm in het LO-portaal.
+- **MijnOverheid (MO):** alleen taken die MijnOverheid zelf kan uitvoeren verschijnen hier (upload; formulieren nog uit te werken). Betalingstaken worden nooit via dit scherm afgehandeld — die starten een directe redirect vanuit [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md). Taken die MO niet zelf kan uitvoeren worden via [`SCR-DIGID-EH`](./digid-eenvoudige-herauthenticatie.md) doorgestuurd naar dit scherm in het LO-portaal.
