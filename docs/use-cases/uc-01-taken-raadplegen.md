@@ -15,17 +15,15 @@ sidebar_position: 2
 
 ## R1 — Hoofdflow
 
-1. Klant opent [`SCR-MIJN-TAKEN`](../schermen/mijn-taken.md) en ziet de eigen taken.
-2. Klant filtert optioneel op status — interactie [L.1](../schermen/mijn-taken.md#interacties).
-3. Klant sorteert optioneel op vervaldatum — interactie [L.3](../schermen/mijn-taken.md#interacties).
-4. Klant klikt een rij aan — interactie [L.2](../schermen/mijn-taken.md#interacties) — en komt op [`SCR-TAKEN-IN-CONTEXT`](../schermen/taken-in-context.md).
-5. Klant leest de toelichting en eventuele bijlagen.
+1. Klant opent het portaal en komt op een scherm waar de eigen taken worden getoond — bijvoorbeeld [`SCR-MIJN-TAKEN`](../schermen/mijn-taken.md) (een dedicated takenoverzicht) of [`SCR-RECENT`](../schermen/recent.md) (een "Recent"-blok waarin taken naast andere activiteiten verschijnen).
+2. Klant ziet de eigen openstaande taken met titel, status en eventueel vervaldatum.
+3. Klant klikt een taak aan en komt op [`SCR-TAKEN-IN-CONTEXT`](../schermen/taken-in-context.md).
+4. Klant leest de toelichting van de context en de daarbij behorende taken.
 
 ## Alternatieve flows
 
-- **R2 — Geen taken beschikbaar:** `SCR-MIJN-TAKEN` toont een lege-staat melding; er zijn geen rijen om op te klikken.
-- **R3 — Klant paginateert:** de klant laadt de volgende pagina resultaten via interactie [L.4](../schermen/mijn-taken.md#interacties).
-- **R4 — Taken in context:** de klant benadert [`SCR-TAKEN-IN-CONTEXT`](../schermen/taken-in-context.md) vanuit een zaak, product of ander object (bijv. via een deeplink vanuit MijnZaken of een erfpachtportaal). De lijst is vooraf gefilterd op het gerelateerde object via `GET /taken?object={urn}`. De klant ziet alleen de taken die bij dat object horen en kan ze raadplegen en afhandelen zonder het overzicht van alle taken te zien.
+- **R2 — Geen taken beschikbaar:** het overzicht toont een lege-staat melding; er zijn geen rijen om op te klikken.
+- **R3 — Taken in context:** de klant benadert [`SCR-TAKEN-IN-CONTEXT`](../schermen/taken-in-context.md) vanuit een zaak, product of ander object (bijv. via een deeplink vanuit MijnZaken of een erfpachtportaal). De lijst is vooraf gefilterd op het gerelateerde object via [`POST /taken/zoek`](/api/zoek-taken) met `contextId`. De klant ziet alleen de taken die bij dat object horen en kan ze raadplegen en afhandelen zonder het overzicht van alle taken te zien.
 
 ## Resultaat
 

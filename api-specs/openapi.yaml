@@ -2,44 +2,28 @@ openapi: 3.1.0
 info:
   title: MijnTaken API
   description: |
-    De **MijnTaken API** stelt applicaties in staat om taken op te halen voor burgers en ondernemers.
+    De **MijnTaken API** standaardiseert hoe portalen taken tonen en uitvoeren namens hun gebruikers. Het doel: een eindgebruiker kan een taak oppakken op elk aangesloten portaal, ongeacht welke organisatie de taak heeft uitgezet — vergelijkbaar met hoe je met je telefoon in het buitenland belt via een ander netwerk, zonder dat je iets hoeft in te stellen.
 
-    ## Additief model
+    Identificatie en authenticatie van eindgebruikers vallen buiten de scope van dit contract; die worden afgehandeld door een externe identity provider (zoals DigiD of eHerkenning).
 
-    Het `Taak`-object is opgebouwd als een additief model, zodat portalen progressive
-    enhancement en graceful degradation kunnen toepassen.
+    ## Principes
 
-    **De API is agnostisch voor de capabilities van de client.** De response is
-    altijd identiek, ongeacht welk portaal de aanroep doet. Het is aan het portaal
-    om te bepalen wat het met de aangeboden informatie doet:
+    ### 1. Uniform contract
 
-    | `type` herkend | `definitie` aanwezig | Actie                                                             |
-    | :------------- | :-------------------------- | :---------------------------------------------------------------- |
-    | nee            | n.v.t.                      | `canonicalUrl` → directe link; label: „Uitvoeren”               |
-    | ja             | nee                         | Type-specifieke CTA-knop; klik → `canonicalUrl`                  |
-    | ja             | ja                          | Lokale uitvoering renderen; submit → `definitie.endpoint` |
+    Alle providers implementeren dezelfde interface: dezelfde endpoints, dezelfde responsestructuur, hetzelfde gedrag. Het maakt voor een portaal niet uit hoe de provider intern is georganiseerd of waar de data vandaan komt.
 
-    **Context:** de context waaraan een taak gekoppeld is (bijv. een zaak)
-    wordt aangeduid met een portaal-agnostische URN en optioneel een
-    `canonicalUrl` aangeleverd door de dienstverlener. `canonicalUrl` is
-    afwezig als de dienstverlener geen eigen portaal heeft (bijv. gemeenten die
-    volledig via MijnOverheid werken). Portalen met eigen contextondersteuning
-    kunnen de URN gebruiken om een interne URL op te bouwen.
+    ### 2. Forward en backward compatibility
 
-    `uitvoering.canonicalUrl` is de **canonieke verwijzing** naar de uitvoering —
-    altijd aanwezig, altijd bruikbaar als fallback als het portaal niet lokaal
-    kan renderen.
+    Portalen en providers moeten onafhankelijk van elkaar kunnen evolueren. Het contract is daarom uitbreidbaar zonder bestaande implementaties te breken:
 
-    `uitvoering.type` geeft het **type van de definitie** aan, afkomstig
-    uit de taakdefinitie. Het portaal leidt hier het CTA-label uit af
-    (bijv. `betaling` → „Betalen”, `upload` → „Document uploaden”).
-    Onbekend of afwezig type → generiek label „Uitvoeren” + `canonicalUrl`.
+    - **Backward compatible** — een ouder portaal werkt correct met een nieuwere provider die extra velden toevoegt.
+    - **Forward compatible** — een nieuwer portaal kan nieuwe velden benutten als ze aanwezig zijn, zonder dat ze verplicht zijn.
 
-    `uitvoering.definitie` bevat de declaratieve definitie voor lokale
-    uitvoering (bijv. uploadconfiguratie of formulierdefinitie). Alleen aanwezig
-    in de detailrespons (`GET /taken/{uuid}`). Betaling heeft geen
-    `definitie` — betaaltaken leiden altijd tot een redirect via
-    `canonicalUrl`.
+    Dit volgt het [Robustness principle](https://en.wikipedia.org/wiki/Robustness_principle): wees conservatief in wat je stuurt, liberaal in wat je accepteert.
+
+    ### 3. Uitvoering bij de provider
+
+    Een taak wordt altijd uitgevoerd bij de provider. Portalen tonen de taak, maar slaan geen uitvoeringsdata op. Dit borgt dataminimalisatie: uitvoeringsdata verlaat de provider niet structureel.
   version: 0.1.0
   contact:
     name: VNG Realisatie
@@ -76,7 +60,7 @@ paths:
         worden meegegeven. Qua semantiek gedraagt de operatie zich als de
         [HTTP QUERY method (IETF-draft)](https://www.ietf.org/archive/id/draft-ietf-httpbis-safe-method-w-body-05.txt):
         zij is **safe** (geen neveneffecten) en **idempotent** (herhaalde aanroep
-        met dezelfde body geeft hetzelfde resultaat). Consumers mogen de aanroep
+        met dezelfde body geeft hetzelfde resultaat). Portalen mogen de aanroep
         dan ook als zodanig behandelen — cachen, herhalen bij netwerkstoringen, etc.
         Zodra HTTP QUERY breed ondersteund wordt door clients en gateways, kan
         dit endpoint zonder gedragswijziging worden gemigreerd.

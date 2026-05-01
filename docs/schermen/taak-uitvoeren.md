@@ -17,11 +17,11 @@ Een betaaltaak leidt altijd direct tot een redirect naar de betaalprovider, zond
 
 ## Instappaden
 
-| Vanaf                                          | Portaal | Hoe                                                                                                                                    |
-| :--------------------------------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------- |
-| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md) | LO      | Knop _Uitvoeren_ (interactie C.8) — direct, geen portaalwissel                                                                        |
-| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md) | MO      | Knop _Uitvoeren_ (C.8) — uitsluitend voor taken uitvoerbaar in MO (upload; later formulieren); binnen MijnOverheid                    |
-| [`SCR-DIGID-EH`](./digid-eenvoudige-herauthenticatie.md) | LO | Na succesvolle herauthenticatie (portaalwissel vanuit MO); deeplink opent direct de specifieke taak voor uitvoering              |
+| Vanaf                                                    | Portaal | Hoe                                                                                                                 |
+| :------------------------------------------------------- | :------ | :------------------------------------------------------------------------------------------------------------------ |
+| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)          | LO      | Knop _Uitvoeren_ (interactie C.8) — direct, geen portaalwissel                                                      |
+| [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)          | MO      | Knop _Uitvoeren_ (C.8) — uitsluitend voor taken uitvoerbaar in MO (upload; later formulieren); binnen MijnOverheid  |
+| [`SCR-DIGID-EH`](./digid-eenvoudige-herauthenticatie.md) | LO      | Na succesvolle herauthenticatie (portaalwissel vanuit MO); deeplink opent direct de specifieke taak voor uitvoering |
 
 ## Schermvoorbeeld
 
@@ -31,12 +31,12 @@ _Mockup nog toe te voegen._
 
 ## Interacties
 
-| ID      | Element             | Interactie             | Bedoeling / resultaat                                                                                              | API                                                                                    |
-| :------ | :------------------ | :--------------------- | :----------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------- |
-| **U.1** | Scherm laden        | Automatisch            | Taakinformatie en de bijpassende uitvoerinterface worden getoond op basis van taaktype                             | `GET /taken/{taakId}`                                                                  |
-| **U.2** | Bestandsupload veld | Bestanden toevoegen    | Klant selecteert één of meer documenten ter aanlevering                                                            | —                                                                                      |
-| **U.3** | Knop _Verzenden_    | Klik (met bevestiging) | Documenten worden ingediend; taak wordt als afgerond gemarkeerd                                                    | `POST /taken/{taakId}/documenten`, `PATCH /taken/{taakId}` met `{ "status": "afgerond" }` |
-| **U.5** | Terug-navigatie     | Klik                   | Navigeert terug naar [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)                                               | —                                                                                      |
+| ID      | Element             | Interactie             | Bedoeling / resultaat                                                                  | API                                                                       |
+| :------ | :------------------ | :--------------------- | :------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
+| **U.1** | Scherm laden        | Automatisch            | Taakinformatie en de bijpassende uitvoerinterface worden getoond op basis van taaktype | `GET /taken/{uuid}` (lokaal renderen vereist `uitvoering.definitie`)      |
+| **U.2** | Bestandsupload veld | Bestanden toevoegen    | Klant selecteert één of meer documenten ter aanlevering                                | —                                                                         |
+| **U.3** | Knop _Verzenden_    | Klik (met bevestiging) | Documenten worden ingediend bij de provider; deze markeert de taak als afgerond        | `POST` naar `uitvoering.definitie.endpoint` (externe URL bij de provider) |
+| **U.4** | Terug-navigatie     | Klik                   | Navigeert terug naar [`SCR-TAKEN-IN-CONTEXT`](./taken-in-context.md)                   | —                                                                         |
 
 :::note[Taaktype-afhankelijk]
 Niet alle interacties zijn bij elke taak aanwezig. U.2 en U.3 gelden voor uploadtaken. Formulieren (toekomst) volgen een vergelijkbaar patroon.

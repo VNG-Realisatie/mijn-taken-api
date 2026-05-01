@@ -33,18 +33,22 @@ Dit voorbeeld gebruikt de _zaakdetail_-template als tijdelijke invulling — er 
 
 ## Interacties — lijstpaneel
 
-| ID      | Element         | Interactie  | Bedoeling / resultaat                                                                                                                                | API                                         |
-| :------ | :-------------- | :---------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
-| **C.2** | Kolom _Titel_   | Klik op rij | Detailpaneel toont de geselecteerde taak; bij instap via portaalwissel vanuit MO is de taak al voorgeselecteerd en hoeft de klant niets te selecteren | `GET /taken/{taakId}`                       |
-| **C.4** | Terug-navigatie | Klik        | Navigeert terug naar het bovenliggende object (zaak, product, e.d.)                                                                                  | — (deeplink return-URL van het bronportaal) |
+:::warning[Concept]
+Deze interactietabellen zijn een werkversie. Inhoud en interacties kunnen nog wijzigen op basis van werkgroepfeedback.
+:::
+
+| ID      | Element         | Interactie  | Bedoeling / resultaat                                                                                                                                 | API                                         |
+| :------ | :-------------- | :---------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
+| **C.2** | Kolom _Titel_   | Klik op rij | Detailpaneel toont de geselecteerde taak; bij instap via portaalwissel vanuit MO is de taak al voorgeselecteerd en hoeft de klant niets te selecteren | `GET /taken/{uuid}`                         |
+| **C.4** | Terug-navigatie | Klik        | Navigeert terug naar het bovenliggende object (zaak, product, e.d.)                                                                                   | — (deeplink return-URL van het bronportaal) |
 
 ## Interacties — detailpaneel
 
-| ID      | Element          | Interactie             | Bedoeling / resultaat                                                                                                              | API                                                    |
-| :------ | :--------------- | :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------- |
-| **C.5** | Knop _Afronden_  | Klik (met bevestiging) | Status gaat naar `afgerond`; alleen zichtbaar bij `open` of `in_behandeling`                                                       | `PATCH /taken/{taakId}` met `{ "status": "afgerond" }` |
-| **C.8** | Knop _Uitvoeren_ | Klik                   | Navigeert naar [`SCR-TAAK-UITVOEREN`](./taak-uitvoeren.md); gedrag verschilt per portaal — zie _Verschillen per portaal_ hieronder | —                                                      |
-| **C.9** | Knop _Betalen_   | Klik                   | Redirect naar betaalprovider van de dienstverlener; na geslaagde betaling werkt het portaal de taakstatus bij. Altijd uitvoerbaar vanuit elk portaal — geen portaalwissel nodig | — (extern; zie [UC-02 A4](../use-cases/uc-02-taak-afhandelen.md)) |
+| ID      | Element          | Interactie             | Bedoeling / resultaat                                                                                                                                             | API                                                               |
+| :------ | :--------------- | :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------- |
+| **C.5** | Knop _Afronden_  | Klik (met bevestiging) | Het portaal navigeert naar `uitvoering.canonicalUrl` bij de provider; daar handelt de klant de taak af. De provider zet de status op `afgerond`.                  | — (redirect naar provider)                                        |
+| **C.8** | Knop _Uitvoeren_ | Klik                   | Navigeert naar [`SCR-TAAK-UITVOEREN`](./taak-uitvoeren.md) als `uitvoering.definitie` aanwezig is; anders redirect naar `uitvoering.canonicalUrl` bij de provider | —                                                                 |
+| **C.9** | Knop _Betalen_   | Klik                   | Redirect naar `uitvoering.canonicalUrl` (betaalprovider). Altijd uitvoerbaar vanuit elk portaal — geen portaalwissel nodig                                        | — (extern; zie [UC-02 A5](../use-cases/uc-02-taak-afhandelen.md)) |
 
 ## Gebruikt in use cases
 
