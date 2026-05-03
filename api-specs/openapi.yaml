@@ -304,11 +304,17 @@ components:
           type: object
           description: |
             Taaknaam in één of meer talen (BCP 47 taalcodes als sleutels).
+            Nederlands (`nl`) is verplicht; andere talen zijn optioneel.
             Portalen tonen de taal die overeenkomt met de voorkeur van de
-            gebruiker, of vallen terug op een beschikbare taalvariant.
+            gebruiker, of vallen terug op `nl`.
+          required:
+            - nl
+          properties:
+            nl:
+              type: string
+              description: Nederlandse taaknaam (verplicht).
           additionalProperties:
             type: string
-          minProperties: 1
           example:
             nl: Kentekenbewijs uploaden
             en: Upload driving licence
@@ -317,7 +323,14 @@ components:
           description: |
             Optionele korte toelichting op de taak, in één of meer talen
             (BCP 47 taalcodes als sleutels). Alleen aanwezig als de titel
-            niet voldoende zelfbeschrijvend is.
+            niet voldoende zelfbeschrijvend is. Als `toelichting` aanwezig is,
+            moet ten minste de Nederlandse variant (`nl`) gevuld zijn.
+          required:
+            - nl
+          properties:
+            nl:
+              type: string
+              description: Nederlandse toelichting (verplicht als `toelichting` aanwezig is).
           additionalProperties:
             type: string
           example:
@@ -334,15 +347,25 @@ components:
           type: string
           format: date-time
           description: |
-            Uiterste moment waarop de taak uitgevoerd kan worden (RFC 3339 / ISO 8601,
-            inclusief tijdzone-offset). De referentietijdzone is `Europe/Amsterdam`
-            (Nederlandse lokale tijd: `+01:00` in de winter, `+02:00` in de zomer).
+            **Laatste moment waarop de taak nog op tijd is** (RFC 3339 / ISO 8601, inclusief
+            tijdzone-offset). Dit is een **inclusieve** bovengrens: zolang
+            `nu <= deadline` is de taak op tijd; vanaf het eerstvolgende moment is hij te laat.
 
-            De deadline is **inclusief**: een taak met deadline 12 december is
-            nog geldig op 12 december. Als alleen een datum bekend is zonder exact
-            tijdstip, gebruik dan het begin van de volgende dag in lokale tijd —
-            bijv. `2026-12-13T00:00:00+01:00` voor een deadline op 12 december.
-          example: "2026-12-13T00:00:00+01:00"
+            De referentietijdzone is `Europe/Amsterdam` (Nederlandse lokale tijd:
+            `+01:00` in de winter, `+02:00` in de zomer).
+
+            **Codering — als een exact tijdstip bekend is:** gebruik dat tijdstip
+            rechtstreeks. Voorbeeld: deadline "uiterlijk 12 december 12:00" →
+            `2026-12-12T12:00:00+01:00`.
+
+            **Codering — als alleen een kalenderdag bekend is:** gebruik conventioneel
+            het einde van die dag in lokale tijd: `23:59:59`. Voorbeeld: deadline
+            "uiterlijk 12 december" → `2026-12-12T23:59:59+01:00`. Zo blijft de
+            getoonde datum gelijk aan wat de gebruiker leest, en is de hele dag
+            nog geldig. Deze conventie wordt in de praktijk breed toegepast
+            (denk aan belastingdiensten, vergunningstermijnen, formulierdeadlines)
+            en sluit daarmee aan bij wat gebruikers gewend zijn.
+          example: "2026-12-12T23:59:59+01:00"
         context:
           $ref: "#/components/schemas/TaakContext"
         uitvoering:
