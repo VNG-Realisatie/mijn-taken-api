@@ -44,7 +44,7 @@ paths:
   /taken/zoek:
     post:
       operationId: zoekTaken
-      summary: Haal een lijst van taken op
+      summary: Zoek taken
       description: |
         Geeft een lijst van taken terug die voldoen aan de opgegeven filters.
         `klantId` is verplicht; `contextId` is optioneel.

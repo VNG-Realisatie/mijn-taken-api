@@ -13,7 +13,7 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "zoek-taken",
-          label: "Haal een lijst van taken op",
+          label: "Zoek taken",
           className: "api-method post",
         },
         {
