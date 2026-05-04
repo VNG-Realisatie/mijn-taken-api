@@ -80,6 +80,7 @@ const config: Config = {
           'mijn-taken': {
             specPath: 'api-specs/openapi.yaml',
             outputDir: 'api-docs',
+            downloadUrl: 'https://raw.githubusercontent.com/VNG-Realisatie/mijn-taken-api/main/api-specs/openapi.yaml',
             sidebarOptions: {
               groupPathsBy: 'tag',
             },
