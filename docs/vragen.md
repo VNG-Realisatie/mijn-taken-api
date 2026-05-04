@@ -12,27 +12,27 @@ Ja, voor MijnOverheid nu wel. Voor de MijnOmgeving is deze beperking er niet.
 
 **Kunnen taken ook geweigerd worden?**
 
-Nee.
-
-**Kunnen taken ingetrokken worden?**
-
-Ja.
-
-**Worden taken altijd in context getoond?**
-
-Ja, behalve in een overzichtspagina zoals Recent of MijnTaken.
-
-**Kun je nog iets met een reeds uitgevoerde taak?**
-
-Nee.
-
-**Kunnen er meer dan 1 taak(en) tegelijkertijd uitgezet zijn voor dezelfde context?**
-
-Ja.
+Nee, voor zover we nu hebben gezien zijn er geen taken die geweigerd kunnen worden.
 
 **Wat gebeurt er als de termijn verstrijkt?**
 
 Niets buiten een notificatie of visuele indicatie.
+
+**Kunnen taken ingetrokken worden?**
+
+Ja. Met label afgerond. De taak wordt niet verwijderd. Is een soort soft delete. Met reden voor intrekken.
+
+**Worden taken altijd in context getoond?**
+
+Ja, behalve in een overzichtspagina zoals Recent, Overzicht of MijnTaken. In zo'n overzicht is de Taak een link naar de context. De omschrijving is wellicht een samengestelde goed leesbare titel.
+
+**Kun je nog iets met een reeds uitgevoerde taak?**
+
+Nee. Dan krijg je de taak opnieuw.
+
+**Kunnen er meer dan 1 taak(en) tegelijkertijd uitgezet zijn voor dezelfde context?**
+
+Ja, waarom niet.
 
 **Hebben alle taken een termijn?**
 
@@ -40,23 +40,23 @@ Nee — maar klopt dit wel?
 
 **Is er een vernietigingsdatum? En is dat afhankelijk van de status?**
 
-Nog onbeantwoord.
+De taak is onderdeel van de context en wordt verwijderd als de context verwijderd wordt.
 
 **Wat willen we met uitgevoerde taken? Kun je die terugzien? Is dit contextafhankelijk (m.a.w. kun je bij een product ook zien dat je je betaling hebt uitgevoerd?)**
 
-Geen idee. Hoe doet LO dit?
+Ja, dit zit in het UX design. Ook met limieten / filtering op status.
 
 **Kom je na het uitvoeren van een taak altijd terug op de plek waar je deze begon uit te voeren? Dus als je een taak uitvoert bij LO, kom je dan terug bij MO?**
 
-Ja, terug naar waar je begon.
+Ja, terug naar waar je gestart bent. In principe wel, tenzij het technisch niet mogelijk zou zijn. Of als uit gebruikersonderzoek iets anders volgt.
 
 **Is er een resultaatscherm? Ook voor negatieve resultaten?**
 
-Ja, dit is helder voor een gebruiker.
+Ja, er is een apart resultaatscherm. Is onderdeel van het uitvoeren van de taak. Vanaf het resultaatscherm ga je terug naar de contextpagina -- bij voorkeur daar waar je gestart bent.
 
 **Moeten we kijken naar een ondertekentaak / toestemming geven-taak?**
 
-Ja, kan nog buiten scope blijven maar wel rekening mee houden in het technisch ontwerp.
+Ja, maar kan voor nu nog buiten scope blijven, maar wel rekening mee houden in het technisch ontwerp. Het is wel een beoogde toepassing van een taak.
 
 **Gaat een taak (behorende bij een zaak) zelfstandig in het "Recent" overzicht getoond worden, of wordt dit weergegeven als een wijziging op een zaak?**
 
@@ -72,33 +72,33 @@ Deze taak wordt getoond onder de zaak. Maar de titel van de zaak is niet ondersc
 
 **Waar keer je naartoe terug als de betaling is uitgevoerd?**
 
-Naar de plek waar je hem begon.
+Naar de plek waar je hem begon (in principe).
 
 **Wat voor soorten exception-schermen zijn er (definitief fout, probeer opnieuw)?**
 
-Nog uit te werken.
-
-**Is er geen staging area?**
-
-Klopt, selectie betaalmiddel etc. volgen later pas.
+Voor nu definitieve fout en tijdelijke fout.
 
 ## Bestandsupload
 
 **Is er een staging fase?**
 
-Wij nemen aan van wel, zie beschrijving hieronder.
+Wij nemen aan van wel, zie beschrijving hieronder. Je kunt meerdere documenten uploaden.
 
 **Kun je per bestand optionele opmerkingen plaatsen?**
 
-Ja, we nemen aan van wel.
+Ja, we nemen aan van wel. Deze functionaliteit zit in de formulierentaak van VTB. Voor MijnOverheid dient uitgewerkt te worden of omschrijvingsvelden oid bij moeten of niet.
 
-**Kruisjes naast bestanden die al geüpload zijn?**
+**Hoe geven we metadata mee over de bestanden die geupload worden in de taaksessie?**
+
+Dit is ook nog een ontwerpvraag. Informatieobjecttypen kunnen worden toegevoegd.
+
+**Kruisjes naast bestanden die al geüpload zijn om te kunnen verwijderen?**
 
 Ja, lijkt ons van wel.
 
-**Bestand ook nog even in te zien?**
+**Bestand ook nog even in te zien voordat je de taak indient/afrondt?**
 
-Nog onbeantwoord.
+Is wel wenselijk.
 
 **Zijn meerdere bestanden uploaden in scope?**
 
@@ -106,7 +106,7 @@ Ja.
 
 **Kun je een overzicht zien van geüploade bestanden? In het scherm van de zaak of andere context?**
 
-Ja, bij de context waar het betrekking op heeft.
+Ja, op portalen die dit ondersteunen en MijnOverheid ondersteunt dit nog niet.
 
 **Moet je je in te leveren bestanden kunnen editen (verwijderen en commentaar geven)?**
 
@@ -114,42 +114,25 @@ Ja, zie hierboven.
 
 **Zijn er taken waarbij er maar 1 bestand bij mag?**
 
-Nog onbeantwoord.
+Ligt aan het taakpatroon en/of het formulier. Dit wordt belegd vanuit een formulierdefinitie, die nog verder uitgewerkt moet worden.
 
 **Bestandseisen: maximale grootte, formaten, etc.?**
 
-Nog onbeantwoord.
+Ja, ook dit moet uit een formulierdefinitie volgen. 0 of meer bestandstypen. Minimale en maximale grootte. Maximaal aantal bestanden. Veld verplicht is of niet. En een extra veld zoals informatieobjecttype.
 
-**Inline foto's uploaden?**
+**Inline foto's uploaden (bijv. met een mobiele telefoon)**
 
-Out of scope, technisch mogelijk houden.
+Dit ligt ook aan de formulierdefinitie. Is erg eenvoudig toe te voegen in een mobile-first opzet.
 
-**Hoe dekken we veiligheid/virusscanner af?**
+**Hoe dekken we veiligheid/virusscanner af vanuit MijnOverheid?**
 
 Niet, dat doet de ontvanger.
 
 ## Technisch
 
-**Hoe ondersteunen we een "Recent"-scherm?**
-
-Een Recent-scherm heeft waarschijnlijk twee dingen nodig die nu nog ontbreken:
-
-1. **Datum-velden** op samenvattingen (aanmaakdatum, mutatiedatum) — zodat een portaal kan sorteren en filteren op recente wijzigingen.
-2. **Filtering op datum** in de query (bijv. `gewijzigdNa`) — zodat providers alleen relevante resultaten teruggeven.
-
-Een gelezen/ongelezen status is persoonsgebonden sessiestatus en ligt bij het portaal, niet bij de provider.
-
-Nog onbeantwoord: welke datum-velden zijn minimaal nodig, en zijn deze generiek genoeg om ook voor andere resource-typen te gelden?
-
-**KCC-ontsluiting: aparte API of uitbreiding van deze API?**
-
-De huidige API vereist altijd een `klantId` als primaire filter. Voor een KCC-medewerker is het startpunt juist een context (bijv. een zaak), waarbij de betrokken klanten het resultaat zijn — niet de input. Dat vraagt om andere autorisatie (medewerkerscope in plaats van klantscope) en mogelijk een andere responsestructuur.
-
-Voorlopige aanname: KCC-ontsluiting is een aparte standaard of een extra autorisatielaag bovenop dezelfde provider. `klantId` blijft verplicht in deze API.
-
 **Moet MO een resultaat kunnen tonen nadat je terug geredirect wordt naar MO (zowel via redirect als cloudevent)?**
 
-Ja, zie ook het sequence diagram.
+Ja, zie ook het sequence diagram voor de upload use case.
 
 **Lossen we CORS op met proxies of anders?**
 
@@ -159,7 +142,7 @@ Nog uit te zoeken.
 
 **Eenvoudige herauthenticatie / DigiD flow**
 
-Nog uit te werken.
+Dit is terug te vinden op het functioneel ontwerp van DigiD bij Logius.
 
 **Taak volbracht / bevestiging?**
 
