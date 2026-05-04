@@ -130,6 +130,12 @@ Niet, dat doet de ontvanger.
 
 ## Technisch
 
+**KCC-ontsluiting: aparte API of uitbreiding van deze API?**
+
+De huidige API vereist altijd een `klantId` als primaire filter. Voor een KCC-medewerker is het startpunt juist een context (bijv. een zaak), waarbij de betrokken klanten het resultaat zijn — niet de input. Dat vraagt om andere autorisatie (medewerkerscope in plaats van klantscope) en mogelijk een andere responsestructuur.
+
+Voorlopige aanname: KCC-ontsluiting is een aparte standaard of een extra autorisatielaag bovenop dezelfde provider. `klantId` blijft verplicht in deze API.
+
 **Moet MO een resultaat kunnen tonen nadat je terug geredirect wordt naar MO (zowel via redirect als cloudevent)?**
 
 Ja, zie ook het sequence diagram.

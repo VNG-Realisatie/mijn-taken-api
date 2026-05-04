@@ -2,7 +2,9 @@ openapi: 3.1.0
 info:
   title: MijnTaken API
   description: |
-    De **MijnTaken API** standaardiseert hoe portalen taken tonen en uitvoeren namens hun gebruikers. Het doel: een eindgebruiker kan een taak oppakken op elk aangesloten portaal, ongeacht welke organisatie de taak heeft uitgezet — vergelijkbaar met hoe je met je telefoon in het buitenland belt via een ander netwerk, zonder dat je iets hoeft in te stellen.
+    De **MijnTaken API** standaardiseert hoe portalen klantgerelateerde gegevens tonen en acties uitvoeren namens hun gebruikers. Het doel: een eindgebruiker kan informatie en taken raadplegen op elk aangesloten portaal, ongeacht welke organisatie de gegevens beheert — vergelijkbaar met hoe je met je telefoon in het buitenland belt via een ander netwerk, zonder dat je iets hoeft in te stellen.
+
+    De API is opgezet als een **kern met uitbreidingssets**: het `/context/zoek`-endpoint retourneert een samengesteld object waarvan de inhoud via de `include`-parameter wordt gestuurd. Initieel worden taken ondersteund; andere resource-typen (bijv. contactmomenten, zaakstatus) kunnen worden toegevoegd zonder bestaande implementaties te breken.
 
     Identificatie en authenticatie van eindgebruikers vallen buiten de scope van dit contract; die worden afgehandeld door een externe identity provider (zoals DigiD of eHerkenning).
 
@@ -34,27 +36,28 @@ info:
     url: https://opensource.org/licenses/EUPL-1.2
 
 servers:
-  - url: https://api.example.nl/taken/v1
+  - url: https://api.example.nl/v1
     description: Productie
 
 tags:
+  - name: Context
+    description: Raadpleeg samengestelde klantgerelateerde gegevens
   - name: Taken
     description: Raadpleeg en beheer taken
 
 paths:
-  /taken/zoek:
+  /context/zoek:
     post:
-      operationId: zoekTaken
-      summary: Zoek taken
+      operationId: zoekContext
+      summary: Zoek context
       description: |
-        Geeft een lijst van taken terug die voldoen aan de opgegeven filters.
-        `klantId` is verplicht; `contextId` is optioneel.
+        Retourneert een samengesteld object met klantgerelateerde gegevens voor
+        de opgegeven klant en optionele context. Via de `include`-parameter
+        bepaalt de aanroeper welke resource-typen worden meegeleverd.
 
-        De respons bevat `TaakSamenvatting`-objecten: alle velden die een portaal
-        nodig heeft om een takenlijst of taakkaart te renderen, inclusief
-        `context`, `uitvoering.canonicalUrl` en `uitvoering.type` (CTA-hint).
-        `definitie` wordt **niet** meegeleverd; die is beschikbaar
-        via `GET /taken/{uuid}`.
+        Initieel wordt alleen `taken` ondersteund. Nieuwe resource-typen
+        kunnen worden toegevoegd zonder bestaande implementaties te breken:
+        clients negeren typen die ze niet kennen.
 
         **Ontwerpkeuze — POST als query:**
         Deze operatie gebruikt `POST` omdat de filtercriteria in de request body
@@ -66,13 +69,13 @@ paths:
         Zodra HTTP QUERY breed ondersteund wordt door clients en gateways, kan
         dit endpoint zonder gedragswijziging worden gemigreerd.
       tags:
-        - Taken
+        - Context
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TaakQuery"
+              $ref: "#/components/schemas/ContextQuery"
       responses:
         "200":
           description: Succesvol
@@ -82,9 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TaakSamenvatting"
+                $ref: "#/components/schemas/ContextResultaat"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -126,9 +127,9 @@ paths:
 
 components:
   schemas:
-    TaakQuery:
+    ContextQuery:
       type: object
-      description: Filtercriteria voor het opvragen van taken.
+      description: Zoekcriteria voor het opvragen van een samengestelde contextrespons.
       required:
         - klantId
       properties:
@@ -138,8 +139,47 @@ components:
           example: "a8f3c1d2-7e44-4b1a-9c0f-123456789abc"
         contextId:
           type: string
-          description: Identifier van de context (bijv. zaak, product of dossier) waarbinnen de taken worden gezocht.
-          example: "zaak-2026-00042"
+          format: uri
+          pattern: "^urn:"
+          description: |
+            URN-identifier van de context waarbinnen gezocht wordt
+            (bijv. een zaak, product of dossier). Het URN-formaat maakt
+            de identifier namespace-safe en onafhankelijk van het type context.
+          example: "urn:nl:gemeenten:zaak:2026-00042"
+        include:
+          type: array
+          description: |
+            Resource-typen die worden meegeleverd in de respons.
+            Als afwezig of leeg, worden alle door de provider ondersteunde typen
+            teruggegeven. Clients negeren typen die ze niet kennen.
+
+            Open lijst — nieuwe waarden kunnen worden toegevoegd zonder
+            bestaande implementaties te breken.
+          items:
+            type: string
+            x-extensible-enum:
+              - taken
+          example: ["taken"]
+
+    ContextResultaat:
+      type: object
+      description: |
+        Samengesteld object met klantgerelateerde gegevens.
+        Bevat alleen de resource-typen die via `include` zijn opgevraagd
+        én door de provider worden ondersteund. Afwezige sleutels betekenen
+        dat het type niet is opgevraagd of niet ondersteund wordt.
+      properties:
+        taken:
+          type: array
+          description: |
+            Taken die voldoen aan de opgegeven filtercriteria. Aanwezig als
+            `taken` in `include` staat (of `include` afwezig is).
+
+            Bevat `TaakSamenvatting`-objecten: alle velden die nodig zijn voor
+            een takenlijst of taakkaart. Type-specifieke uitvoeringsvelden
+            worden niet meegeleverd; die zijn beschikbaar via `GET /taken/{uuid}`.
+          items:
+            $ref: "#/components/schemas/TaakSamenvatting"
 
     TaakContext:
       type: object

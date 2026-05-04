@@ -8,14 +8,20 @@ const sidebar: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Taken",
+      label: "Context",
       items: [
         {
           type: "doc",
-          id: "zoek-taken",
-          label: "Zoek taken",
+          id: "zoek-context",
+          label: "Zoek context",
           className: "api-method post",
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "Taken",
+      items: [
         {
           type: "doc",
           id: "retrieve-taak",
