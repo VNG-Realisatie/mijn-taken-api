@@ -55,6 +55,15 @@ paths:
         de opgegeven klant en optionele context. Via de `include`-parameter
         bepaalt de aanroeper welke resource-typen worden meegeleverd.
 
+        Dit endpoint is bedoeld om verschillende overzichts- en contextschermen
+        te bedienen vanuit één call. Voorbeelden:
+
+        | Scherm | `contextId` | `include` |
+        |---|---|---|
+        | MijnTaken | — | `["taken"]` |
+        | Overzicht per domein | — | `["taken", "contactmomenten"]` |
+        | Zaak-contextscherm | `urn:nl:gemeenten:zaak:2026-00042` | `["taken", "contactmomenten"]` |
+
         Initieel wordt alleen `taken` ondersteund. Nieuwe resource-typen
         kunnen worden toegevoegd zonder bestaande implementaties te breken:
         clients negeren typen die ze niet kennen.

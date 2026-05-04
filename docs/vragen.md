@@ -130,6 +130,17 @@ Niet, dat doet de ontvanger.
 
 ## Technisch
 
+**Hoe ondersteunen we een "Recent"-scherm?**
+
+Een Recent-scherm heeft waarschijnlijk twee dingen nodig die nu nog ontbreken:
+
+1. **Datum-velden** op samenvattingen (aanmaakdatum, mutatiedatum) — zodat een portaal kan sorteren en filteren op recente wijzigingen.
+2. **Filtering op datum** in de query (bijv. `gewijzigdNa`) — zodat providers alleen relevante resultaten teruggeven.
+
+Een gelezen/ongelezen status is persoonsgebonden sessiestatus en ligt bij het portaal, niet bij de provider.
+
+Nog onbeantwoord: welke datum-velden zijn minimaal nodig, en zijn deze generiek genoeg om ook voor andere resource-typen te gelden?
+
 **KCC-ontsluiting: aparte API of uitbreiding van deze API?**
 
 De huidige API vereist altijd een `klantId` als primaire filter. Voor een KCC-medewerker is het startpunt juist een context (bijv. een zaak), waarbij de betrokken klanten het resultaat zijn — niet de input. Dat vraagt om andere autorisatie (medewerkerscope in plaats van klantscope) en mogelijk een andere responsestructuur.
