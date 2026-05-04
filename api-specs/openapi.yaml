@@ -28,6 +28,7 @@ info:
   contact:
     name: VNG Realisatie
     url: https://github.com/vng-realisatie/mijn-taken-api
+    email: standaarden.ondersteuning@vng.nl
   license:
     name: EUPL 1.2
     url: https://opensource.org/licenses/EUPL-1.2
@@ -75,6 +76,9 @@ paths:
       responses:
         "200":
           description: Succesvol
+          headers:
+            API-Version:
+              $ref: "#/components/headers/API-Version"
           content:
             application/json:
               schema:
@@ -108,6 +112,9 @@ paths:
       responses:
         "200":
           description: Succesvol
+          headers:
+            API-Version:
+              $ref: "#/components/headers/API-Version"
           content:
             application/json:
               schema:
@@ -398,23 +405,30 @@ components:
         detail:
           type: string
 
+  headers:
+    API-Version:
+      description: Versie van de API die de respons heeft gegenereerd.
+      schema:
+        type: string
+        example: 0.1.0
+
   responses:
     BadRequest:
       description: Ongeldige aanvraag
       content:
-        application/json:
+        application/problem+json:
           schema:
             $ref: "#/components/schemas/Fout"
     Unauthorized:
       description: Authenticatie vereist
       content:
-        application/json:
+        application/problem+json:
           schema:
             $ref: "#/components/schemas/Fout"
     NotFound:
       description: Taak niet gevonden
       content:
-        application/json:
+        application/problem+json:
           schema:
             $ref: "#/components/schemas/Fout"
 
