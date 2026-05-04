@@ -149,9 +149,13 @@ components:
         include:
           type: array
           description: |
-            Resource-typen die worden meegeleverd in de respons.
+            Resource-typen waarvan een **samenvatting** wordt meegeleverd in de respons.
             Als afwezig of leeg, worden alle door de provider ondersteunde typen
             teruggegeven. Clients negeren typen die ze niet kennen.
+
+            Let op: de respons bevat altijd samenvattingen. Voor resource-typen
+            waarvoor een detail-endpoint bestaat (bijv. `GET /taken/{uuid}` voor
+            afhandeling) kan aanvullende informatie worden opgevraagd.
 
             Open lijst — nieuwe waarden kunnen worden toegevoegd zonder
             bestaande implementaties te breken.
@@ -165,6 +169,9 @@ components:
       type: object
       description: |
         Samengesteld object met klantgerelateerde gegevens.
+        Bevat per resource-type een lijst van **samenvattingen**. Voor resource-typen
+        waarvoor een detail-endpoint bestaat (bijv. `GET /taken/{uuid}` voor afhandeling)
+        kan aanvullende informatie worden opgevraagd.
         Bevat alleen de resource-typen die via `include` zijn opgevraagd
         én door de provider worden ondersteund. Afwezige sleutels betekenen
         dat het type niet is opgevraagd of niet ondersteund wordt.
