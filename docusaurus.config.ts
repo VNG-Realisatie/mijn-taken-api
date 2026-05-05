@@ -81,6 +81,8 @@ const config: Config = {
             specPath: 'api-specs/openapi.yaml',
             outputDir: 'api-docs',
             downloadUrl: 'https://raw.githubusercontent.com/VNG-Realisatie/mijn-taken-api/main/api-specs/openapi.yaml',
+            showExtensions: true,
+            showSchemas: true,
             sidebarOptions: {
               groupPathsBy: 'tag',
             },

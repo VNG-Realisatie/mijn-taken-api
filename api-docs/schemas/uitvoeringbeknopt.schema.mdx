@@ -1,0 +1,54 @@
+---
+id: uitvoeringbeknopt
+title: "UitvoeringBeknopt"
+description: "Uitvoeringsinformatie voor een taak."
+sidebar_label: "UitvoeringBeknopt"
+hide_title: true
+hide_table_of_contents: true
+schema: true
+sample: {"canonicalUrl":"https://portaal.gemeente.nl/taken/550e8400/uitvoeren?returnUrl=https%3A%2F%2Fmijnoverheid.nl%2Ftaken%2Fcontext%2Fzaak-2026-00042","type":"betaling"}
+custom_edit_url: null
+---
+
+import Schema from "@theme/Schema";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"UitvoeringBeknopt"}
+>
+</Heading>
+
+
+
+Uitvoeringsinformatie voor een taak.
+
+`canonicalUrl` is altijd aanwezig als fallback — bruikbaar als het
+portaal niet lokaal kan renderen.
+
+`type` geeft het type van de definitie aan. Het portaal leidt
+hier het CTA-label uit af (bijv. `betaling` → „Betalen”,
+`upload` → „Document uploaden”). Onbekend of afwezig → generiek
+label „Uitvoeren” + `canonicalUrl` als fallback.
+
+`definitie` bevat de declaratieve definitie voor lokale uitvoering.
+Alleen aanwezig in de detailrespons (`GET /taken/{uuid}`), en alleen
+als de provider deze meelevert. Betaling heeft geen `definitie` —
+betaaltaken leiden altijd tot een redirect via `canonicalUrl`.
+Portalen die het type niet herkennen negeren `definitie` en gebruiken
+`canonicalUrl` als fallback.
+
+| `type` herkend | `definitie` aanwezig | Actie                                                                 |
+|---|---|---|
+| nee            | n.v.t.               | `canonicalUrl` → redirect; portaal voegt `returnUrl` toe              |
+| ja             | nee                  | Type-specifieke CTA-knop; klik → `canonicalUrl` + `returnUrl`         |
+| ja             | ja                   | Lokale uitvoering renderen; submit → `definitie.endpoint`             |
+
+
+<Schema
+  {...require("./uitvoeringbeknopt.Schema.json")}
+>
+  
+</Schema>
+            

@@ -1,0 +1,48 @@
+---
+id: taakcontext
+title: "TaakContext"
+description: "De context waaraan de taak is gekoppeld (bijv. een zaak of product)."
+sidebar_label: "TaakContext"
+hide_title: true
+hide_table_of_contents: true
+schema: true
+sample: {"urn":"urn:nl:gemeenten:zaak:2026-00042","canonicalUrl":"https://portaal.gemeente.nl/zaken/2026-00042"}
+custom_edit_url: null
+---
+
+import Schema from "@theme/Schema";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"TaakContext"}
+>
+</Heading>
+
+
+
+De context waaraan de taak is gekoppeld (bijv. een zaak of product).
+
+De context wordt aangeduid met een **URN** (portaal-agnostische identifier)
+en optioneel een **canonicalUrl** (door de dienstverlener aangeleverd).
+
+`canonicalUrl` is afwezig als de dienstverlener geen eigen portaal heeft
+— bijvoorbeeld gemeenten die volledig via MijnOverheid werken.
+
+Portalen met contextondersteuning kunnen een interne URL opbouwen via de
+URN; het type context is af te leiden uit de URN-structuur zelf.
+
+| Kan URN omzetten | `canonicalUrl` aanwezig | Actie |
+|---|---|---|
+| ja | ja/nee | Bouw interne URL via URN; `canonicalUrl` irrelevant |
+| nee | ja | Gebruik `canonicalUrl` als directe link |
+| nee | nee | _(nader te bepalen)_ |
+
+
+<Schema
+  {...require("./taakcontext.Schema.json")}
+>
+  
+</Schema>
+            

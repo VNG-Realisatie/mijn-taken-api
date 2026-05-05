@@ -159,10 +159,16 @@ Uit te werken schermen, onder andere:
 - Bestandsuploadscherm, inclusief commentaar bij bestand(en)
 - Flow van formulieren bij gemeente(n)
 
-:::note Huidige situatie
-De API is opgezet als API-first: elke portaal kan de API aanroepen. Op dit moment is het recent-scherm alleen uitgewerkt voor MijnOverheid, en valt MijnTaken onder de Lokale Omgeving. In beide gevallen documenteren we de API-aanroep, zodat een Lokale Omgeving in de toekomst ook een eigen recent-scherm kan bouwen.
-:::
-
 ## Out-of-scope
 
-- Centrale takenlijst / takenregister — zelfde als met zaken
+- Centrale takenlijst / takenregister zoals geïmplementeerd door MijnOverheid
+
+## Technische uitwerking
+
+Groeipad.
+
+## API
+
+**Enum values**
+
+We gebruiken x-extensible-enum voor forwards compatibility.

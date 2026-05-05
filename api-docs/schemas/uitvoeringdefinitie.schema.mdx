@@ -1,0 +1,41 @@
+---
+id: uitvoeringdefinitie
+title: "UitvoeringDefinitie"
+description: "Declaratieve definitie voor lokale uitvoering van een taak. Alleen"
+sidebar_label: "UitvoeringDefinitie"
+hide_title: true
+hide_table_of_contents: true
+schema: true
+sample: {"endpoint":"https://api.gemeente.nl/documenten/upload","maxBestanden":5,"toegestaneFormaten":["pdf","jpg","png"],"maxBestandsgrootte":10485760,"schema":{}}
+custom_edit_url: null
+---
+
+import Schema from "@theme/Schema";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"UitvoeringDefinitie"}
+>
+</Heading>
+
+
+
+Declaratieve definitie voor lokale uitvoering van een taak. Alleen
+aanwezig in de detailrespons (`GET /taken/{uuid}`).
+
+Betaling heeft geen `definitie` — betaaltaken leiden altijd
+tot een redirect via `uitvoering.canonicalUrl`.
+
+Welke velden aanwezig zijn volgt uit `uitvoering.type`. Clients die
+een onbekend type tegenkomen negeren `definitie` en gebruiken
+`canonicalUrl` als fallback.
+
+
+<Schema
+  {...require("./uitvoeringdefinitie.Schema.json")}
+>
+  
+</Schema>
+            

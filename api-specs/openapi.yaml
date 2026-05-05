@@ -34,6 +34,9 @@ info:
   license:
     name: EUPL 1.2
     url: https://opensource.org/licenses/EUPL-1.2
+  x-logo:
+    url: https://vng-realisatie.github.io/mijn-taken-api/img/mijn-taken.svg
+    altText: MijnTaken API
 
 servers:
   - url: https://api.example.nl/v1
@@ -170,8 +173,10 @@ components:
             bestaande implementaties te breken.
           items:
             type: string
-            x-extensible-enum:
+            examples:
               - taken
+            x-enumDescriptions:
+              taken: Taken die de klant kan uitvoeren (bijv. uploaden, betalen, formulier invullen).
           example: ["taken"]
 
     ContextResultaat:
@@ -288,10 +293,14 @@ components:
             - "https://betalen.gemeente.nl/pay?kenmerk=REF-2026-00042&bedrag=6550&returnUrl=https%3A%2F%2Fmijnoverheid.nl%2Ftaken%2Fcontext%2Fzaak-2026-00042"
         type:
           type: string
-          x-extensible-enum:
+          examples:
             - betaling
             - upload
             - formulier
+          x-enumDescriptions:
+            betaling: Taak vereist een betaling via redirect naar de betaalprovider.
+            upload: Taak vereist het uploaden van één of meer documenten.
+            formulier: Taak vereist het invullen van een formulier.
           description: |
             Type van de definitie, afkomstig uit de taakdefinitie.
             Het portaal leidt hier het CTA-label uit af. Onbekend of afwezig
@@ -299,7 +308,6 @@ components:
 
             Open string — nieuwe waarden kunnen worden toegevoegd zonder
             bestaande clients te breken.
-          example: upload
 
     UitvoeringDefinitie:
       type: object
@@ -376,7 +384,7 @@ components:
             type: string
           example:
             nl: Kentekenbewijs uploaden
-            en: Upload driving licence
+            en: Upload vehicle registration document
         toelichting:
           type: object
           description: |
@@ -394,14 +402,17 @@ components:
             type: string
           example:
             nl: Upload een kopie van uw kentekenbewijs voor uw parkeervergunningsaanvraag.
-            en: Upload a copy of your driving licence for your parking permit application.
+            en: Upload a copy of your vehicle registration document for your parking permit application.
         status:
           type: string
-          x-extensible-enum:
+          examples:
             - open
             - afgerond
             - geannuleerd
-          example: open
+          x-enumDescriptions:
+            open: Taak staat open en kan door de gebruiker worden uitgevoerd.
+            afgerond: Taak is succesvol afgerond.
+            geannuleerd: Taak is geannuleerd en niet meer uitvoerbaar.
         deadline:
           type: string
           format: date-time
@@ -448,18 +459,30 @@ components:
 
     Fout:
       type: object
-      required:
-        - code
-        - titel
+      description: Foutdetails conform [RFC 9457 Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc9457).
       properties:
-        code:
+        type:
           type: string
-          example: invalid
-        titel:
+          format: uri-reference
+          description: URI-referentie die het probleemtype identificeert. Als afwezig, wordt `/problemen/onbekend` aangenomen.
+          example: /problemen/ongeldige-invoer
+        title:
           type: string
+          description: Korte, voor mensen leesbare samenvatting van het probleemtype.
           example: Ongeldige invoer
+        status:
+          type: integer
+          format: int32
+          description: HTTP-statuscode voor dit voorval.
+          example: 400
         detail:
           type: string
+          description: Voor mensen leesbare uitleg van dit specifieke voorval.
+          example: Het veld 'klantId' is verplicht.
+        instance:
+          type: string
+          format: uri-reference
+          description: URI-referentie die dit specifieke voorval identificeert.
 
   headers:
     API-Version:
