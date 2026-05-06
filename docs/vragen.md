@@ -171,4 +171,4 @@ Groeipad.
 
 **Enum values**
 
-We gebruiken x-extensible-enum voor forwards compatibility.
+We gebruiken geen enums, maar examples bij strings voor forwards compatibility. Ook voegen we dan enumDescriptions toe. Dit volgt [Zalando API Guideline 112](https://opensource.zalando.com/restful-api-guidelines/#112).

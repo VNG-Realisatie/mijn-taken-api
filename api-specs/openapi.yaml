@@ -173,6 +173,7 @@ components:
             bestaande implementaties te breken.
           items:
             type: string
+            description: "[Extensible enum](https://opensource.zalando.com/restful-api-guidelines/#112)."
             examples:
               - taken
             x-enumDescriptions:
@@ -302,6 +303,7 @@ components:
             upload: Taak vereist het uploaden van één of meer documenten.
             formulier: Taak vereist het invullen van een formulier.
           description: |
+            [Extensible enum](https://opensource.zalando.com/restful-api-guidelines/#112).
             Type van de definitie, afkomstig uit de taakdefinitie.
             Het portaal leidt hier het CTA-label uit af. Onbekend of afwezig
             type → generiek label „Uitvoeren” + `canonicalUrl` als fallback.
@@ -405,6 +407,7 @@ components:
             en: Upload a copy of your vehicle registration document for your parking permit application.
         status:
           type: string
+          description: "[Extensible enum](https://opensource.zalando.com/restful-api-guidelines/#112)."
           examples:
             - open
             - afgerond
