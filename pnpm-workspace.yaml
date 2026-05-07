@@ -1,5 +1,5 @@
-onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - "@swc/core"
-  - core-js
-  - postman-code-generators
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  core-js: true
+  postman-code-generators: false
