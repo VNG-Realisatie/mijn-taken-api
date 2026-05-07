@@ -131,7 +131,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Taak"
+              $ref: "#/components/schemas/Taak"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "404":
@@ -165,7 +165,7 @@ components:
             Als afwezig of leeg, worden alle door de provider ondersteunde typen
             teruggegeven. Clients negeren typen die ze niet kennen.
 
-            Let op: de respons bevat altijd samenvattingen. Voor resource-typen
+            Let op: de respons bevat altijd samenvattingen (info-objecten). Voor resource-typen
             waarvoor een detail-endpoint bestaat (bijv. `GET /taken/{uuid}` voor
             afhandeling) kan aanvullende informatie worden opgevraagd.
 
@@ -184,7 +184,7 @@ components:
       type: object
       description: |
         Samengesteld object met klantgerelateerde gegevens.
-        Bevat per resource-type een lijst van **samenvattingen**. Voor resource-typen
+        Bevat per resource-type een lijst van **samenvattingen** (info-objecten). Voor resource-typen
         waarvoor een detail-endpoint bestaat (bijv. `GET /taken/{uuid}` voor afhandeling)
         kan aanvullende informatie worden opgevraagd.
         Bevat alleen de resource-typen die via `include` zijn opgevraagd
@@ -197,13 +197,13 @@ components:
             Taken die voldoen aan de opgegeven filtercriteria. Aanwezig als
             `taken` in `include` staat (of `include` afwezig is).
 
-            Bevat `TaakSamenvatting`-objecten: alle velden die nodig zijn voor
+            Bevat `TaakInfo`-objecten: alle velden die nodig zijn voor
             een takenlijst of taakkaart. Type-specifieke uitvoeringsvelden
             worden niet meegeleverd; die zijn beschikbaar via `GET /taken/{uuid}`.
           items:
-            $ref: "#/components/schemas/TaakSamenvatting"
+            $ref: "#/components/schemas/TaakInfo"
 
-    TaakContext:
+    ContextLink:
       type: object
       description: |
         De context waaraan de taak is gekoppeld (bijv. een zaak of product).
@@ -240,7 +240,7 @@ components:
             interne URL opbouwen via de URN.
           example: "https://portaal.gemeente.nl/zaken/2026-00042"
 
-    UitvoeringBeknopt:
+    Uitvoering:
       type: object
       description: |
         Uitvoeringsinformatie voor een taak.
@@ -352,10 +352,10 @@ components:
           description: "(formulier) Formulierdefinitie (JSON Schema of vergelijkbaar). Structuur nog nader te bepalen."
           additionalProperties: true
 
-    TaakSamenvatting:
+    TaakInfo:
       type: object
       description: |
-        Beknopte taakrepresentatie zoals teruggegeven door `POST /taken/zoek`.
+        Taakrepresentatie zoals teruggegeven door `POST /context/zoek`.
         Bevat alle velden die nodig zijn voor een takenlijst of taakkaart,
         inclusief context en uitvoeringstype. Type-specifieke uitvoeringsvelden
         worden niet meegeleverd.
@@ -440,29 +440,29 @@ components:
             en sluit daarmee aan bij wat gebruikers gewend zijn.
           example: "2026-12-12T23:59:59+01:00"
         context:
-          $ref: "#/components/schemas/TaakContext"
+          $ref: "#/components/schemas/ContextLink"
         uitvoering:
-          $ref: "#/components/schemas/UitvoeringBeknopt"
+          $ref: "#/components/schemas/Uitvoering"
 
     Taak:
       description: |
         Volledige taakrepresentatie zoals teruggegeven door `GET /taken/{uuid}`.
-        Breidt `TaakSamenvatting` uit met type-specifieke uitvoeringsvelden.
+        Breidt `TaakInfo` uit met type-specifieke uitvoeringsvelden.
       allOf:
-        - $ref: "#/components/schemas/TaakSamenvatting"
+        - $ref: "#/components/schemas/TaakInfo"
         - type: object
           properties:
             uitvoering:
               allOf:
-                - $ref: "#/components/schemas/UitvoeringBeknopt"
+                - $ref: "#/components/schemas/Uitvoering"
                 - type: object
                   properties:
                     definitie:
                       $ref: "#/components/schemas/UitvoeringDefinitie"
 
-    Fout:
+    Probleem:
       type: object
-      description: Foutdetails conform [RFC 9457 Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc9457).
+      description: Probleemdetails conform [RFC 9457 Problem Details for HTTP APIs](https://tools.ietf.org/html/rfc9457).
       properties:
         type:
           type: string
@@ -500,19 +500,19 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: "#/components/schemas/Fout"
+            $ref: "#/components/schemas/Probleem"
     Unauthorized:
       description: Authenticatie vereist
       content:
         application/problem+json:
           schema:
-            $ref: "#/components/schemas/Fout"
+            $ref: "#/components/schemas/Probleem"
     NotFound:
       description: Taak niet gevonden
       content:
         application/problem+json:
           schema:
-            $ref: "#/components/schemas/Fout"
+            $ref: "#/components/schemas/Probleem"
 
   securitySchemes:
     bearerAuth:

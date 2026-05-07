@@ -1,8 +1,8 @@
 ---
-id: taaksamenvatting
-title: "TaakSamenvatting"
-description: "Beknopte taakrepresentatie zoals teruggegeven door `POST /taken/zoek`."
-sidebar_label: "TaakSamenvatting"
+id: taakinfo
+title: "TaakInfo"
+description: "Taakrepresentatie zoals teruggegeven door `POST /context/zoek`."
+sidebar_label: "TaakInfo"
 hide_title: true
 hide_table_of_contents: true
 schema: true
@@ -16,20 +16,20 @@ import Heading from "@theme/Heading";
 <Heading
   as={"h1"}
   className={"openapi__heading"}
-  children={"TaakSamenvatting"}
+  children={"TaakInfo"}
 >
 </Heading>
 
 
 
-Beknopte taakrepresentatie zoals teruggegeven door `POST /taken/zoek`.
+Taakrepresentatie zoals teruggegeven door `POST /context/zoek`.
 Bevat alle velden die nodig zijn voor een takenlijst of taakkaart,
 inclusief context en uitvoeringstype. Type-specifieke uitvoeringsvelden
 worden niet meegeleverd.
 
 
 <Schema
-  {...require("./taaksamenvatting.Schema.json")}
+  {...require("./taakinfo.Schema.json")}
 >
   
 </Schema>

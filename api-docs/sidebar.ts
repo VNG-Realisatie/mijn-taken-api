@@ -48,14 +48,14 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "schemas/taakcontext",
-          label: "TaakContext",
+          id: "schemas/contextlink",
+          label: "ContextLink",
           className: "schema",
         },
         {
           type: "doc",
-          id: "schemas/uitvoeringbeknopt",
-          label: "UitvoeringBeknopt",
+          id: "schemas/uitvoering",
+          label: "Uitvoering",
           className: "schema",
         },
         {
@@ -66,8 +66,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "schemas/taaksamenvatting",
-          label: "TaakSamenvatting",
+          id: "schemas/taakinfo",
+          label: "TaakInfo",
           className: "schema",
         },
         {
@@ -78,8 +78,8 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "schemas/fout",
-          label: "Fout",
+          id: "schemas/probleem",
+          label: "Probleem",
           className: "schema",
         },
       ],
