@@ -131,7 +131,7 @@ paths:
           content:
             application/json:
               schema:
-              $ref: "#/components/schemas/Taak"
+                $ref: "#/components/schemas/Taak"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "404":
