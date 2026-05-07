@@ -363,21 +363,17 @@ components:
           properties:
             type:
               not:
-                # dit zijn de bestaande types, en de json schema validatie zorgt ervoor dat deze variant
-                # alleen matcht als `type` geen van deze waarden heeft. Dit is onze catch-all voor toekomstige
-                # types die we nog niet kennen, en zorgt ervoor dat `oneOf` altijd precies één match oplevert.
                 enum:
                   - upload
                   - formulier
                   - betaling
               example: "nieuw-type"
               description: |
+                **Geen vaste waarde** — dit veld is hier niet `upload`, `formulier` of `betaling`.
+
                 Type van de uitvoering, afkomstig uit de taakdefinitie.
                 Het portaal leidt hier het label voor de actieknop uit af. Onbekend of afwezig
                 type → generiek label „Uitvoeren“ + `fallbackUrl` als fallback.
-
-                Open string — nieuwe waarden kunnen worden toegevoegd zonder
-                bestaande clients te breken.
 
     TaakInfo:
       type: object
