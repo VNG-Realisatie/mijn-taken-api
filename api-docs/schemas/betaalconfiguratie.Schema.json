@@ -1,1 +1,0 @@
-{"schema":{"type":"object","description":"Configuratie voor `type: betaling`.\nDe redirect-URL voor de betaalprovider is opgenomen in `fallbackUrl`.\n","title":"BetaalConfiguratie"},"schemaType":"response"}
