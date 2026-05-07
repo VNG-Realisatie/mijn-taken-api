@@ -1,7 +1,7 @@
 ---
 id: contextlink
 title: "ContextLink"
-description: "De context waaraan de taak is gekoppeld (bijv. een zaak of product)."
+description: "De context waaraan de taak is gekoppeld (bijv. een zaak of product),"
 sidebar_label: "ContextLink"
 hide_title: true
 hide_table_of_contents: true
@@ -22,22 +22,23 @@ import Heading from "@theme/Heading";
 
 
 
-De context waaraan de taak is gekoppeld (bijv. een zaak of product).
-
-De context wordt aangeduid met een **URN** (portaal-agnostische identifier)
-en optioneel een **canonicalUrl** (door de dienstverlener aangeleverd).
+De context waaraan de taak is gekoppeld (bijv. een zaak of product),
+aangeduid met een **URN** en optioneel een **canonicalUrl**.
 
 `canonicalUrl` is afwezig als de dienstverlener geen eigen portaal heeft
-— bijvoorbeeld gemeenten die volledig via MijnOverheid werken.
+(bijv. bedrijfsonderdelen die geen eigen portaal hebben).
 
-Portalen met contextondersteuning kunnen een interne URL opbouwen via de
-URN; het type context is af te leiden uit de URN-structuur zelf.
+Portalen die de URN kunnen omzetten naar een interne URL doen dat;
+`canonicalUrl` is dan irrelevant. Anders geldt: gebruik `canonicalUrl`
+als die aanwezig is. Het type context is af te leiden uit de URN-structuur.
 
-| Kan URN omzetten | `canonicalUrl` aanwezig | Actie |
-|---|---|---|
-| ja | ja/nee | Bouw interne URL via URN; `canonicalUrl` irrelevant |
-| nee | ja | Gebruik `canonicalUrl` als directe link |
-| nee | nee | _(nader te bepalen)_ |
+```mermaid
+flowchart TD
+    A{URN → Interne URL?} -->|Ja| B[Gebruik interne URL]
+    A -->|Nee| C{Heeft canonicalUrl?}
+    C -->|Ja| D[Gebruik canonicalUrl]
+    C -->|Nee| E[Nader te bepalen]
+```
 
 
 <Schema

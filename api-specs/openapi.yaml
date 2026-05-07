@@ -206,27 +206,29 @@ components:
     ContextLink:
       type: object
       description: |
-        De context waaraan de taak is gekoppeld (bijv. een zaak of product).
-
-        De context wordt aangeduid met een **URN** (portaal-agnostische identifier)
-        en optioneel een **canonicalUrl** (door de dienstverlener aangeleverd).
+        De context waaraan de taak is gekoppeld (bijv. een zaak of product),
+        aangeduid met een **URN** en optioneel een **canonicalUrl**.
 
         `canonicalUrl` is afwezig als de dienstverlener geen eigen portaal heeft
-        — bijvoorbeeld gemeenten die volledig via MijnOverheid werken.
+        (bijv. bedrijfsonderdelen die geen eigen portaal hebben).
 
-        Portalen met contextondersteuning kunnen een interne URL opbouwen via de
-        URN; het type context is af te leiden uit de URN-structuur zelf.
+        Portalen die de URN kunnen omzetten naar een interne URL doen dat;
+        `canonicalUrl` is dan irrelevant. Anders geldt: gebruik `canonicalUrl`
+        als die aanwezig is. Het type context is af te leiden uit de URN-structuur.
 
-        | Kan URN omzetten | `canonicalUrl` aanwezig | Actie |
-        |---|---|---|
-        | ja | ja/nee | Bouw interne URL via URN; `canonicalUrl` irrelevant |
-        | nee | ja | Gebruik `canonicalUrl` als directe link |
-        | nee | nee | _(nader te bepalen)_ |
+        ```mermaid
+        flowchart TD
+            A{URN → Interne URL?} -->|Ja| B[Gebruik interne URL]
+            A -->|Nee| C{Heeft canonicalUrl?}
+            C -->|Ja| D[Gebruik canonicalUrl]
+            C -->|Nee| E[Nader te bepalen]
+        ```
       required:
         - urn
       properties:
         urn:
           type: string
+          pattern: "^urn:"
           description: Portaal-agnostische identifier van de context, in URN-formaat.
           example: "urn:nl:gemeenten:zaak:2026-00042"
         canonicalUrl:
@@ -240,117 +242,114 @@ components:
             interne URL opbouwen via de URN.
           example: "https://portaal.gemeente.nl/zaken/2026-00042"
 
-    Uitvoering:
+    UitvoeringInfo:
       type: object
       description: |
-        Uitvoeringsinformatie voor een taak.
+        Uitvoeringsinformatie voor een taak: hoe de actieknop gelabeld wordt
+        en waar de gebruiker naartoe gaat.
 
-        `canonicalUrl` is altijd aanwezig als fallback — bruikbaar als het
-        portaal niet lokaal kan renderen.
+        `fallbackUrl` is altijd aanwezig als universele fallback.
 
-        `type` geeft het type van de definitie aan. Het portaal leidt
-        hier het CTA-label uit af (bijv. `betaling` → „Betalen”,
-        `upload` → „Document uploaden”). Onbekend of afwezig → generiek
-        label „Uitvoeren” + `canonicalUrl` als fallback.
-
-        `definitie` bevat de declaratieve definitie voor lokale uitvoering.
-        Alleen aanwezig in de detailrespons (`GET /taken/{uuid}`), en alleen
-        als de provider deze meelevert. Betaling heeft geen `definitie` —
-        betaaltaken leiden altijd tot een redirect via `canonicalUrl`.
-        Portalen die het type niet herkennen negeren `definitie` en gebruiken
-        `canonicalUrl` als fallback.
-
-        | `type` herkend | `definitie` aanwezig | Actie                                                                 |
-        |---|---|---|
-        | nee            | n.v.t.               | `canonicalUrl` → redirect; portaal voegt `returnUrl` toe              |
-        | ja             | nee                  | Type-specifieke CTA-knop; klik → `canonicalUrl` + `returnUrl`         |
-        | ja             | ja                   | Lokale uitvoering renderen; submit → `definitie.endpoint`             |
+        ```mermaid
+        flowchart TD
+            A{Type ondersteund?} -->|Nee| B[Label: \'Uitvoeren\']
+            A -->|Ja| C[Type-specifiek label]
+            B --> D[Redirect via fallbackUrl + returnUrl]
+            C --> E{Type-specifieke velden aanwezig?}
+            E -->|Nee| D
+            E -->|Ja| F[Lokale uitvoering via type-specifieke velden]
+        ```
       required:
-        - canonicalUrl
+        - fallbackUrl
       properties:
-        canonicalUrl:
-          type: string
-          format: uri
-          description: |
-            Canonieke URL voor de uitvoering van de taak. Altijd aanwezig.
-            Bruikbaar als fallback als het portaal `type` niet kent of
-            `definitie` niet lokaal kan renderen.
-
-            De betekenis verschilt per type:
-
-            | `type`      | Betekenis van `canonicalUrl`                                    |
-            |---|---|
-            | `betaling`  | Redirect naar betaalprovider (bedrag en kenmerk ingebakken)     |
-            | `upload`    | Fallback als portaal `definitie` niet kan renderen              |
-            | `formulier` | Fallback als portaal `definitie` niet kan renderen              |
-            | onbekend    | Redirect; portaal toont label „Uitvoeren"                       |
-
-            In alle redirect-scenario's voegt het portaal een `returnUrl` toe
-            vóór de redirect, zodat de externe partij de gebruiker na afloop
-            terug kan sturen naar `SCR-TAKEN-IN-CONTEXT`. De precieze
-            parameternaam is afhankelijk van de ontvangende partij.
-          examples:
-            - "https://portaal.gemeente.nl/taken/550e8400/uitvoeren?returnUrl=https%3A%2F%2Fmijnoverheid.nl%2Ftaken%2Fcontext%2Fzaak-2026-00042"
-            - "https://betalen.gemeente.nl/pay?kenmerk=REF-2026-00042&bedrag=6550&returnUrl=https%3A%2F%2Fmijnoverheid.nl%2Ftaken%2Fcontext%2Fzaak-2026-00042"
         type:
           type: string
           examples:
-            - betaling
             - upload
             - formulier
+            - betaling
           x-enumDescriptions:
             betaling: Taak vereist een betaling via redirect naar de betaalprovider.
             upload: Taak vereist het uploaden van één of meer documenten.
             formulier: Taak vereist het invullen van een formulier.
           description: |
             [Extensible enum](https://opensource.zalando.com/restful-api-guidelines/#112).
-            Type van de definitie, afkomstig uit de taakdefinitie.
-            Het portaal leidt hier het CTA-label uit af. Onbekend of afwezig
-            type → generiek label „Uitvoeren” + `canonicalUrl` als fallback.
+            Type van de uitvoering, afkomstig uit de taakdefinitie.
+            Het portaal leidt hier het label voor de actieknop uit af. Onbekend of afwezig
+            type → generiek label „Uitvoeren“ + `fallbackUrl` als fallback.
 
             Open string — nieuwe waarden kunnen worden toegevoegd zonder
             bestaande clients te breken.
-
-    UitvoeringDefinitie:
-      type: object
-      description: |
-        Declaratieve definitie voor lokale uitvoering van een taak. Alleen
-        aanwezig in de detailrespons (`GET /taken/{uuid}`).
-
-        Betaling heeft geen `definitie` — betaaltaken leiden altijd
-        tot een redirect via `uitvoering.canonicalUrl`.
-
-        Welke velden aanwezig zijn volgt uit `uitvoering.type`. Clients die
-        een onbekend type tegenkomen negeren `definitie` en gebruiken
-        `canonicalUrl` als fallback.
-      required:
-        - endpoint
-      properties:
-        endpoint:
+        fallbackUrl:
           type: string
           format: uri
           description: |
-            Endpoint voor de uitvoering (upload of formulier indienen).
-            Aanwezig voor alle bekende typen.
+            Fallback-URL voor de uitvoering van de taak. Altijd aanwezig.
+            Gebruikt als het portaal `type` niet ondersteunt of de type-specifieke
+            velden niet lokaal kan verwerken.
+
+            In redirect-scenario\'s voegt het portaal een `returnUrl` toe
+            vóór de redirect, zodat de externe partij de gebruiker na afloop
+            terug kan sturen naar `SCR-TAKEN-IN-CONTEXT`. De precieze
+            parameternaam is afhankelijk van de ontvangende partij.
+          examples:
+            - "https://portaal.gemeente.nl/taken/550e8400/uitvoeren?returnUrl=https%3A%2F%2Fmijnoverheid.nl%2Ftaken%2Fcontext%2Fzaak-2026-00042"
+            - "https://betalen.gemeente.nl/pay?kenmerk=REF-2026-00042&bedrag=6550&returnUrl=https%3A%2F%2Fmijnoverheid.nl%2Ftaken%2Fcontext%2Fzaak-2026-00042"
+    ConfiguratieVariant:
+      description: |
+        Type-specifieke uitvoeringsconfiguratie, corresponderend met `uitvoering.type`.
+        Aanwezig als `type` een bekende waarde heeft met bijbehorende configuratie.
+      anyOf:
+        - $ref: "#/components/schemas/UploadConfiguratie"
+        - $ref: "#/components/schemas/FormulierConfiguratie"
+        - $ref: "#/components/schemas/BetaalConfiguratie"
+
+    UploadConfiguratie:
+      type: object
+      description: "Configuratie voor `type: upload`."
+      required:
+        - submitUrl
+      properties:
+        submitUrl:
+          type: string
+          format: uri
+          description: API-endpoint voor het uploaden van bestanden (niet zichtbaar voor de gebruiker).
           example: "https://api.gemeente.nl/documenten/upload"
         maxBestanden:
           type: integer
-          description: "(upload) Maximum aantal bestanden dat geüpload mag worden."
+          description: Maximum aantal bestanden dat geüpload mag worden.
           example: 5
         toegestaneFormaten:
           type: array
           items:
             type: string
-          description: "(upload) Toegestane bestandsextensies."
+          description: Toegestane bestandsextensies.
           example: [pdf, jpg, png]
         maxBestandsgrootte:
           type: integer
-          description: "(upload) Maximale bestandsgrootte in bytes."
+          description: Maximale bestandsgrootte in bytes.
           example: 10485760
+
+    FormulierConfiguratie:
+      type: object
+      description: "Configuratie voor `type: formulier`."
+      required:
+        - submitUrl
+      properties:
+        submitUrl:
+          type: string
+          format: uri
+          description: API-endpoint voor het indienen van het formulier (niet zichtbaar voor de gebruiker).
+          example: "https://api.gemeente.nl/formulieren/indienen"
         schema:
           type: object
-          description: "(formulier) Formulierdefinitie (JSON Schema of vergelijkbaar). Structuur nog nader te bepalen."
-          additionalProperties: true
+          description: Formulierconfiguratie (JSON Schema of vergelijkbaar). Structuur nog nader te bepalen.
+
+    BetaalConfiguratie:
+      type: object
+      description: |
+        Configuratie voor `type: betaling`.
+        De redirect-URL voor de betaalprovider is opgenomen in `fallbackUrl`.
 
     TaakInfo:
       type: object
@@ -442,23 +441,20 @@ components:
         context:
           $ref: "#/components/schemas/ContextLink"
         uitvoering:
-          $ref: "#/components/schemas/Uitvoering"
+          $ref: "#/components/schemas/UitvoeringInfo"
 
     Taak:
-      description: |
-        Volledige taakrepresentatie zoals teruggegeven door `GET /taken/{uuid}`.
-        Breidt `TaakInfo` uit met type-specifieke uitvoeringsvelden.
       allOf:
         - $ref: "#/components/schemas/TaakInfo"
-        - type: object
+      description: |
+        Taakrepresentatie zoals teruggegeven door `GET /taken/{uuid}`.
+        Bevat alle informatie die nodig is om een taak uit te voeren met zo min mogelijk portaalwissels,
+        inclusief type-specifieke uitvoeringsconfiguratie.
+      properties:
+        uitvoering:
           properties:
-            uitvoering:
-              allOf:
-                - $ref: "#/components/schemas/Uitvoering"
-                - type: object
-                  properties:
-                    definitie:
-                      $ref: "#/components/schemas/UitvoeringDefinitie"
+            configuratie:
+              $ref: "#/components/schemas/ConfiguratieVariant"
 
     Probleem:
       type: object

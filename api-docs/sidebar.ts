@@ -54,14 +54,32 @@ const sidebar: SidebarsConfig = {
         },
         {
           type: "doc",
-          id: "schemas/uitvoering",
-          label: "Uitvoering",
+          id: "schemas/uitvoeringinfo",
+          label: "UitvoeringInfo",
           className: "schema",
         },
         {
           type: "doc",
-          id: "schemas/uitvoeringdefinitie",
-          label: "UitvoeringDefinitie",
+          id: "schemas/configuratievariant",
+          label: "ConfiguratieVariant",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "schemas/uploadconfiguratie",
+          label: "UploadConfiguratie",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "schemas/formulierconfiguratie",
+          label: "FormulierConfiguratie",
+          className: "schema",
+        },
+        {
+          type: "doc",
+          id: "schemas/betaalconfiguratie",
+          label: "BetaalConfiguratie",
           className: "schema",
         },
         {
