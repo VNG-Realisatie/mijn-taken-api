@@ -75,9 +75,9 @@ paths:
         Deze operatie gebruikt `POST` omdat de filtercriteria in de request body
         worden meegegeven. Qua semantiek gedraagt de operatie zich als de
         [HTTP QUERY method (IETF-draft)](https://www.ietf.org/archive/id/draft-ietf-httpbis-safe-method-w-body-05.txt):
-        zij is **safe** (geen neveneffecten) en **idempotent** (herhaalde aanroep
-        met dezelfde body geeft hetzelfde resultaat). Portalen mogen de aanroep
-        dan ook als zodanig behandelen — cachen, herhalen bij netwerkstoringen, etc.
+        zij is **safe** — de aanroep heeft geen neveneffecten en wijzigt geen
+        toestand op de server. Portalen mogen de aanroep dan ook als zodanig
+        behandelen — herhalen bij netwerkstoringen, optimistisch prefetchen, etc.
         Zodra HTTP QUERY breed ondersteund wordt door clients en gateways, kan
         dit endpoint zonder gedragswijziging worden gemigreerd.
       tags:
